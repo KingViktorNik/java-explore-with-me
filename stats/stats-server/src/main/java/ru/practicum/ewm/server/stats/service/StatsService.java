@@ -4,6 +4,7 @@ import ru.practicum.ewm.dto.stats.dto.EndpointHitDto;
 import ru.practicum.ewm.dto.stats.dto.StatsAnswerDto;
 
 import java.util.List;
+import java.util.Set;
 
 public interface StatsService {
     /**
@@ -23,6 +24,6 @@ public interface StatsService {
      * @param unique Нужно ли учитывать только уникальные посещения (только с уникальным ip) Default value : false
      * @return ViewStats - app - Название сервиса, uri - URI сервиса, hits - Количество просмотров
      */
-    List<StatsAnswerDto> getStats(String start, String end, List<String> uris, Boolean unique);
+    List<StatsAnswerDto> getStats(String start, String end, Set<String> uris, Boolean unique);
 
 }

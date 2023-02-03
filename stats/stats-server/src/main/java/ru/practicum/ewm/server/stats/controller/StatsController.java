@@ -12,6 +12,7 @@ import ru.practicum.ewm.dto.stats.dto.StatsAnswerDto;
 import ru.practicum.ewm.server.stats.service.StatsService;
 
 import java.util.List;
+import java.util.Set;
 import javax.validation.Valid;
 
 @Slf4j
@@ -20,7 +21,7 @@ import javax.validation.Valid;
 @RequestMapping(consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class StatsController {
-    private StatsService service;
+    private final StatsService service;
 
     @PostMapping(path = "/hit", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveHit(@Valid @RequestBody EndpointHitDto endpointHitDto) {
@@ -32,7 +33,7 @@ public class StatsController {
     @GetMapping("/stats")
     public List<StatsAnswerDto> getStats(@RequestParam(name = "start") String start,
                                          @RequestParam(name = "end") String end,
-                                         @RequestParam(name = "uris") List<String> uris,
+                                         @RequestParam(name = "uris") Set<String> uris,
                                          @RequestParam(name = "unique", defaultValue = "false") Boolean unique) {
         List<StatsAnswerDto> answerDtos = service.getStats(start, end, uris, unique);
         log.info("[GET] getStats listSize:{}", answerDtos.size());

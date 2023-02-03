@@ -17,15 +17,16 @@ public class EndpointHit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "app")
+    @Column(name = "app", length = 100, nullable = false)
+
     private String app;
 
-    @Column(name = "uri")
+    @Column(name = "uri", length = 20, nullable = false)
     private String uri;
 
-    @Column(name = "ip")
+    @Column(name = "ip", length = 20, nullable = false)
     private String ip;
 
-    @Column(name = "time_stamp")
+    @Column(name = "time_stamp", nullable = false)
     private LocalDateTime timestamp;
 }

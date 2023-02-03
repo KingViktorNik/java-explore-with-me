@@ -7,6 +7,8 @@ import ru.practicum.ewm.server.stats.model.EndpointHit;
 import ru.practicum.ewm.server.stats.model.StatsQueryView;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 public interface StatsRepository extends JpaRepository<EndpointHit, Long> {
     /**
@@ -14,25 +16,25 @@ public interface StatsRepository extends JpaRepository<EndpointHit, Long> {
      */
     @Query("SELECT e.app as app, e.uri as uri, count(e.uri) as hits " +
             "FROM EndpointHit as e " +
-            "WHERE uri = :uri and e.timestamp >= :start and e.timestamp <= :end " +
+            "WHERE uri IN :uris and e.timestamp >= :start and e.timestamp <= :end " +
             "GROUP BY uri, app ")
-    StatsQueryView findByUri(@Param("start") LocalDateTime start,
-                             @Param("end") LocalDateTime end,
-                             @Param("uri") String uri);
+    List<StatsQueryView> findByUri(@Param("start") LocalDateTime start,
+                                   @Param("end") LocalDateTime end,
+                                   @Param("uris") Set<String> uris);
 
     /**
      * Получение статистики по посещениям. Только уникальные посещения (unique = true)
      */
     @Query("SELECT e.app as app, e.uri as uri, count(e.uri) as hits " +
             "FROM EndpointHit as e " +
-            "WHERE uri = :uri " +
+            "WHERE uri IN :uris " +
             "and e.timestamp >= :start " +
             "and e.timestamp <= :end " +
             "and e.id IN(SELECT MIN(e_h.id) " +
-                    "FROM EndpointHit as e_h " +
-                    "GROUP BY e_h.ip ) " +
+                        "FROM EndpointHit as e_h " +
+                        "GROUP BY e_h.ip ) " +
             "GROUP BY uri, app ")
-    StatsQueryView findByUriUnique(@Param("start") LocalDateTime start,
-                                   @Param("end") LocalDateTime end,
-                                   @Param("uri") String uri);
+    List<StatsQueryView> findByUriUnique(@Param("start") LocalDateTime start,
+                                         @Param("end") LocalDateTime end,
+                                         @Param("uris") Set<String> uris);
 }
