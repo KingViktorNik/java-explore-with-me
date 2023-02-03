@@ -19,17 +19,17 @@ import java.util.List;
 public class TestController {
 
     @GetMapping("/test/hit")
-    public Object testHit () {
+    public Object testHit() {
         return StatsClient.saveHit(new EndpointHitDto(null, "ewm-main-service", "/events/1", "192.163.0.1", "2022-09-06 11:00:23"));
     }
 
     @GetMapping("/test/stats/unique")
-    public Object testStatsUnique () {
+    public Object testStatsUnique() {
         return StatsClient.getStats("2022-09-06 11:00:23", "2022-09-06 22:00:23", List.of("/events/2", "/events/1", "/events/3"), true);
     }
 
     @GetMapping("/test/stats")
-    public Object testStats () {
+    public Object testStats() {
         return StatsClient.getStats("2022-09-06 11:00:23", "2022-09-06 22:00:23", List.of("/events/2", "/events/1", "/events/3"), false);
     }
 }
