@@ -12,7 +12,7 @@ import ru.practicum.ewm.server.stats.repository.StatsRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
+import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
 
@@ -28,21 +28,16 @@ public class StatsServiceImpl implements StatsService {
     }
 
     @Override
-    public List<StatsAnswerDto> getStats(String startSt, String endSt, List<String> uris, Boolean unique) {
+    public List<StatsAnswerDto> getStats(String startSt, String endSt, Set<String> uris, Boolean unique) {
         LocalDateTime start = DateTimeConverter.toDateTime(startSt);
         LocalDateTime end = DateTimeConverter.toDateTime(endSt);
-
         if (unique) {
-            return uris.stream()
-                    .map(uri -> repository.findByUriUnique(start, end, uri))
-                    .filter(Objects::nonNull)
+            return repository.findByUriUnique(start, end, uris).stream()
                     .map(StatsAnswerMapper::toDto)
                     .sorted((o1, o2) -> o2.getHits().compareTo(o1.getHits()))
                     .collect(toList());
         } else {
-            return uris.stream()
-                    .map(uri -> repository.findByUri(start, end, uri))
-                    .filter(Objects::nonNull)
+            return repository.findByUri(start, end, uris).stream()
                     .map(StatsAnswerMapper::toDto)
                     .sorted((o1, o2) -> o2.getHits().compareTo(o1.getHits()))
                     .collect(toList());
