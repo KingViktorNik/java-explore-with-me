@@ -1,4 +1,4 @@
-package ru.practicum.ewm.dto.stats.handler;
+package ru.practicum.ewm.service.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import ru.practicum.ewm.dto.stats.exception.ConflictException;
-import ru.practicum.ewm.dto.stats.exception.NullObjectException;
-import ru.practicum.ewm.dto.stats.exception.ValidationException;
+import ru.practicum.ewm.service.exception.ConflictException;
+import ru.practicum.ewm.service.exception.NullObjectException;
+import ru.practicum.ewm.service.exception.ValidationException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
