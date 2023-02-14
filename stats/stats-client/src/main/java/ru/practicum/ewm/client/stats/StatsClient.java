@@ -1,13 +1,17 @@
 package ru.practicum.ewm.client.stats;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.DefaultUriBuilderFactory;
 import ru.practicum.ewm.dto.stats.dto.EndpointHitDto;
 import ru.practicum.ewm.dto.stats.dto.StatsAnswerDto;
+import ru.practicum.ewm.dto.stats.util.DateTimeConverter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -15,15 +19,25 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class StatsClient {
-    private static final String STATS_SERVER_URL = "http://localhost:9090";
-    private static final RestTemplate template = new RestTemplate();
+    private final String dateTime = DateTimeConverter.toString(LocalDateTime.now());
+    private final String app;
+    private final RestTemplate template;
 
-    public static ResponseEntity<Void> saveHit(EndpointHitDto endpointHitDto) {
+    public StatsClient(@Value("${spring.application.name}") String application,
+                       @Value("${stats-server.port}") String server) {
+        this.app = application;
+        template = new RestTemplate();
+        template.setUriTemplateHandler(new DefaultUriBuilderFactory(server));
+    }
+
+    public ResponseEntity<Void> saveHit(EndpointHitDto endpointHitDto) {
+        endpointHitDto.setApp(app);
+        endpointHitDto.setTimestamp(dateTime);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<EndpointHitDto> request = new HttpEntity<>(endpointHitDto, headers);
-        ResponseEntity<EndpointHitDto> response = template.exchange(STATS_SERVER_URL + "/hit", HttpMethod.POST, request, EndpointHitDto.class);
+        ResponseEntity<EndpointHitDto> response = template.exchange("/hit", HttpMethod.POST, request, EndpointHitDto.class);
 
         if (response.getStatusCode().is2xxSuccessful()) {
             log.info("[HIT] POST saveHit statusCode: {}", response.getStatusCode());
@@ -34,7 +48,13 @@ public class StatsClient {
         }
     }
 
-    public static List<StatsAnswerDto> getStats(String start, String end, List<String> uris, Boolean unique) {
+    public void saveHits(List<EndpointHitDto> dtos) {
+        for (EndpointHitDto hitDto : dtos) {
+            saveHit(hitDto);
+        }
+    }
+
+    public List<StatsAnswerDto> getStats(String start, String end, List<String> uris, Boolean unique) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
@@ -46,7 +66,7 @@ public class StatsClient {
         HttpEntity<List<StatsAnswerDto>> request = new HttpEntity<>(null, headers);
 
         ResponseEntity<List<StatsAnswerDto>> response = template.exchange(
-                STATS_SERVER_URL + "/stats" + path,
+                "/stats" + path,
                 HttpMethod.GET, request,
                 new ParameterizedTypeReference<>() {
                 },

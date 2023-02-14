@@ -2,7 +2,6 @@ package ru.practicum.ewm.server.stats.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -24,10 +23,10 @@ public class StatsController {
     private final StatsService service;
 
     @PostMapping(path = "/hit", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> saveHit(@Valid @RequestBody EndpointHitDto endpointHitDto) {
+    public ResponseEntity<EndpointHitDto> saveHit(@Valid @RequestBody EndpointHitDto endpointHitDto) {
         endpointHitDto = service.saveHit(endpointHitDto);
         log.info("[POST] saveHit id:{}", endpointHitDto.getId());
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.status(201).body(endpointHitDto);
     }
 
     @GetMapping("/stats")

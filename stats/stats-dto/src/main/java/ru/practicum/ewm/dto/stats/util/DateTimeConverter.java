@@ -1,7 +1,7 @@
 package ru.practicum.ewm.dto.stats.util;
 
-import ru.practicum.ewm.dto.stats.exception.ValidationException;
 
+import javax.validation.ValidationException;
 import java.nio.charset.StandardCharsets;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
