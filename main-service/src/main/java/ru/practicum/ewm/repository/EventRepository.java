@@ -15,16 +15,24 @@ import java.util.Set;
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long>, QuerydslPredicateExecutor<Event> {
 
-    /** Получение события пользователя по идентификатору **/
+    /**
+     * Получение события пользователя по идентификатору
+     **/
     Optional<Event> findByIdAndInitiator_Id(Long eventId, Long userId);
 
-    /** Запрос по списку идентификаторов событий **/
+    /**
+     * Запрос по списку идентификаторов событий
+     **/
     Optional<Set<Event>> findByIdIn(Set<Long> eventsId);
 
-    /** Запрос по идентификатору и статусу **/
+    /**
+     * Запрос по идентификатору и статусу
+     **/
     Optional<Event> findByIdAndState(Long eventsId, EventState eventState);
 
-    /** Запрос по идентификатору организатору события **/
+    /**
+     * Запрос по идентификатору организатору события
+     **/
     Page<EventShort> findAllByInitiator_Id(Long userId, Pageable pageable);
 
 }

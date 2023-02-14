@@ -28,7 +28,7 @@ public class PartRequestPrivateController {
         if (userId == null || eventId == null) {
             throw new ValidationException("Incorrectly made request.");
         }
-        Long id = Optional.of(Long.parseLong(userId)).orElseThrow(()-> new ValidationException("Incorrectly made request."));
+        Long id = Optional.of(Long.parseLong(userId)).orElseThrow(() -> new ValidationException("Incorrectly made request."));
         return ResponseEntity.status(201).body(service.addParticipationRequest(id, eventId));
     }
 

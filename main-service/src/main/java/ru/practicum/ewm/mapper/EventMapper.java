@@ -34,23 +34,23 @@ public class EventMapper {
         ev.setAnnotation(dto.getAnnotation() == null
                 ? ev.getAnnotation()
                 : dto.getAnnotation());
-        ev.setCategory(dto.getCategory() == null || dto.getCategory() .equals(ev.getCategory().getId())
+        ev.setCategory(dto.getCategory() == null || dto.getCategory().equals(ev.getCategory().getId())
                 ? ev.getCategory()
                 : new Category(dto.getCategory(), null));
         ev.setDescription(dto.getDescription() == null
                 ? ev.getDescription()
                 : dto.getDescription());
-        ev.setEventDate( dto.getEventDate()   == null
+        ev.setEventDate(dto.getEventDate() == null
                 ? ev.getEventDate()
                 : DateTimeConverter.toDateTime(dto.getEventDate()));
-        ev.setEventLocation( dto.getEventLocation() == null
-                ? ev.getEventLocation()
-                : new EventLocation(dto.getEventLocation().getLat() == null
-                                        ? ev.getEventLocation().getLat()
-                                        : dto.getEventLocation().getLat(),
-                                    dto.getEventLocation().getLon() == null
-                                        ? ev.getEventLocation().getLon()
-                                        : dto.getEventLocation().getLon()
+        ev.setEventLocation(dto.getEventLocation() == null
+                        ? ev.getEventLocation()
+                        : new EventLocation(dto.getEventLocation().getLat() == null
+                        ? ev.getEventLocation().getLat()
+                        : dto.getEventLocation().getLat(),
+                        dto.getEventLocation().getLon() == null
+                                ? ev.getEventLocation().getLon()
+                                : dto.getEventLocation().getLon()
                 )
         );
         ev.setPaid(dto.getPaid() == null

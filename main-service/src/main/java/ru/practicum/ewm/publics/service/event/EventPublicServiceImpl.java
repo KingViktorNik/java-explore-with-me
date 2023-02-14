@@ -42,11 +42,11 @@ public class EventPublicServiceImpl implements EventPublicService {
                 .buildOr();
 
         List<Event> result = repository.findAll(predicate, PageRequest.of(dto.getPage().getFrom(),
-                        dto.getPage().getSize())).stream().collect(toList());
+                dto.getPage().getSize())).stream().collect(toList());
 
         List<EndpointHitDto> hitDtos = new ArrayList<>();
-        for (int i = 0; i < result.size() ; i++) {
-            result.get(i).setViews( result.get(i).getViews() + 1);
+        for (int i = 0; i < result.size(); i++) {
+            result.get(i).setViews(result.get(i).getViews() + 1);
             EndpointHitDto hitDto = new EndpointHitDto("/events/" + result.get(i).getId(), "IP");
             hitDtos.add(hitDto);
         }
@@ -72,10 +72,10 @@ public class EventPublicServiceImpl implements EventPublicService {
     @Override
     public EventFullDto getEvent(Long id) {
         Event event = repository.findByIdAndState(id, EventState.PUBLISHED)
-                .orElseThrow(()-> new NullPointerException("Event with id="+ id +" was not found"));
+                .orElseThrow(() -> new NullPointerException("Event with id=" + id + " was not found"));
         event.setViews(event.getViews() + 1);
         repository.save(event);
-        EndpointHitDto hitDto = new EndpointHitDto( "/events/" + event.getId(), "IP");
+        EndpointHitDto hitDto = new EndpointHitDto("/events/" + event.getId(), "IP");
         client.saveHit(hitDto);
         return EventMapper.toFullDto(event);
     }

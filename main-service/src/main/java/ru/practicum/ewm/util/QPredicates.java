@@ -15,7 +15,7 @@ public class QPredicates {
     private List<Predicate> predicates = new ArrayList<>();
 
     public <T> QPredicates add(T object, Function<T, Predicate> function) {
-        if (object !=null) {
+        if (object != null) {
             predicates.add(function.apply(object));
         }
         return this;

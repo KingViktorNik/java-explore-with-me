@@ -9,41 +9,63 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EventShortDto {
-    /** Краткое описание **/
+    /**
+     * Краткое описание
+     **/
     private String annotation;
 
-    /** Категория **/
+    /**
+     * Категория
+     **/
     private Category category;
 
-    /** Количество одобренных заявок на участие в данном событии **/
+    /**
+     * Количество одобренных заявок на участие в данном событии
+     **/
     private Integer confirmedRequests;
 
-    /** Дата и время на которые намечено событие (в формате "yyyy-MM-dd HH:mm:ss") **/
+    /**
+     * Дата и время на которые намечено событие (в формате "yyyy-MM-dd HH:mm:ss")
+     **/
     private String eventDate;
 
-    /** Идентификатор **/
+    /**
+     * Идентификатор
+     **/
     private Long id;
 
-    /** Пользователь (краткая информация) **/
+    /**
+     * Пользователь (краткая информация)
+     **/
     private UserShort initiator;
 
-    /** Нужно ли оплачивать участие **/
+    /**
+     * Нужно ли оплачивать участие
+     **/
     private Boolean paid;
 
-    /** Заголовок **/
+    /**
+     * Заголовок
+     **/
     private String title;
 
-    /** Количество просмотрев события **/
+    /**
+     * Количество просмотрев события
+     **/
     private Integer views;
 
     @Getter
     @Setter
     @AllArgsConstructor
     public static final class UserShort {
-        /** Идентификатор **/
+        /**
+         * Идентификатор
+         **/
         private Long id;
 
-        /** Имя пользователя **/
+        /**
+         * Имя пользователя
+         **/
         private String name;
     }
 
@@ -51,10 +73,14 @@ public class EventShortDto {
     @Setter
     @AllArgsConstructor
     public static final class Category {
-        /** Идентификатор **/
+        /**
+         * Идентификатор
+         **/
         private Long id;
 
-        /** Название **/
+        /**
+         * Название
+         **/
         private String name;
     }
 }

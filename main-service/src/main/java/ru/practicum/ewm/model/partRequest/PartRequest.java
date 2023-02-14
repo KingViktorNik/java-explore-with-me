@@ -15,24 +15,34 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PartRequest {
-    /** Идентификатор заявки **/
+    /**
+     * Идентификатор заявки
+     **/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /** Дата и время создания заявки **/
+    /**
+     * Дата и время создания заявки
+     **/
     @Column(name = "created", nullable = false)
     private LocalDateTime created;
 
-    /** Идентификатор события **/
+    /**
+     * Идентификатор события
+     **/
     @Column(name = "event_id")
     private Long eventId;
 
-    /** Идентификатор пользователя, отправившего заявку **/
+    /**
+     * Идентификатор пользователя, отправившего заявку
+     **/
     @Column(name = "requester_id")
     private Long requesterId;
 
-    /** Статус заявки **/
+    /**
+     * Статус заявки
+     **/
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private RequestStatus status;

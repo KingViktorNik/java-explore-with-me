@@ -32,8 +32,8 @@ public class CompilationsPublicServiceImpl implements CompilationsPublicService 
 
     @Override
     public CompilationDto getCompilation(Long compId) {
-        Compilation compilation =repository.findById(compId)
-                .orElseThrow(()-> new NullObjectException("Compilation with id=" + compId + " was not found"));
+        Compilation compilation = repository.findById(compId)
+                .orElseThrow(() -> new NullObjectException("Compilation with id=" + compId + " was not found"));
         log.info("[GET] getCompilation id:{}", compilation.getId());
         return CompilationMapper.toDto(compilation);
     }

@@ -56,7 +56,7 @@ public class EventPrivateController {
     @PatchMapping(value = "/{eventId}/requests", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<EventRequestStatusUpdateResultDto> updateRequests(@PathVariable Long userId,
                                                                             @PathVariable Long eventId,
-                                                                            @RequestBody @Valid EventRequestStatusUpdateRequestDto dto){
+                                                                            @RequestBody @Valid EventRequestStatusUpdateRequestDto dto) {
         return ResponseEntity.ok(service.updateRequests(userId, eventId, dto));
     }
 

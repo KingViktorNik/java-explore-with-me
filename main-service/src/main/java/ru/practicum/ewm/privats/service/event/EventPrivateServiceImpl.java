@@ -149,7 +149,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
     @Override
     public EventRequestStatusUpdateResultDto updateRequests(Long userId, Long eventId, EventRequestStatusUpdateRequestDto dto) {
         RequestStatus status = RequestStatus.from(dto.getStatus())
-                .orElseThrow(()-> new ValidationException("The request was made incorrectly"));
+                .orElseThrow(() -> new ValidationException("The request was made incorrectly"));
         Event event = eventRepository.findByIdAndInitiator_Id(eventId, userId)
                 .orElseThrow(() -> new NullObjectException("Event with id=" + eventId + " was not found"));
 
@@ -182,7 +182,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
                     request.setStatus(status);
                     rejectedRequests.add(request);
                 }
-            }   else {
+            } else {
                 request.setStatus(RequestStatus.REJECTED);
                 rejectedRequests.add(request);
             }
@@ -199,7 +199,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
         }
         eventRepository.save(event);
         return new EventRequestStatusUpdateResultDto(PartRequestMapper.toDtos(confirmedRequests),
-                                                     PartRequestMapper.toDtos(rejectedRequests));
+                PartRequestMapper.toDtos(rejectedRequests));
     }
 
     @Override

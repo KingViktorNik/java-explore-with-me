@@ -9,29 +9,43 @@ import java.util.Set;
 @Getter
 @AllArgsConstructor
 public class EventInquiryDto {
-    /** список id пользователей **/
+    /**
+     * список id пользователей
+     **/
     private final Set<Long> users;
 
-    /** список состояний **/
+    /**
+     * список состояний
+     **/
     private Set<EventState> states;
 
-    /** список id категорий **/
+    /**
+     * список id категорий
+     **/
     private final Set<Long> categories;
 
-    /** Период времени событий **/
+    /**
+     * Период времени событий
+     **/
     private final Range range;
 
-    /** Пагинация **/
+    /**
+     * Пагинация
+     **/
     private final Page page;
 
 
     @Getter
     @AllArgsConstructor
     public final static class Range {
-        /** Дата и время начало 'С' **/
+        /**
+         * Дата и время начало 'С'
+         **/
         private final LocalDateTime start;
 
-        /** Дата и время окончания 'ДО' **/
+        /**
+         * Дата и время окончания 'ДО'
+         **/
         private final LocalDateTime end;
     }
 

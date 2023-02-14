@@ -27,14 +27,10 @@ public class PartRequestPrivateServiceImpl implements PartRequestPrivateService 
     private final UserRepository userRepository;
 
     private final EventRepository eventRepository;
+
     @Override
     public PartRequestDto addParticipationRequest(Long userId, Long eventId) {
         Optional<PartRequest> request = partRequestRepository.findByEventId(eventId);
-
-        // нельзя добавить повторный запрос
-//        if (request.isPresent()) {
-//            throw new ConflictException("Event with id=13 was not found");
-//        }
 
         userRepository.findById(userId)
                 .orElseThrow(() -> new NullObjectException("User with id=" + userId + " was not found"));
@@ -68,20 +64,20 @@ public class PartRequestPrivateServiceImpl implements PartRequestPrivateService 
                 .build();
 
         // проверка лимита заявок
-        if (event.getParticipantLimit() != 0 && event.getParticipantLimit().equals(event.getConfirmedRequests())){
+        if (event.getParticipantLimit() != 0 && event.getParticipantLimit().equals(event.getConfirmedRequests())) {
             event.setAvailable(false);
         } else {
             event.setAvailable(true);
         }
 
-        Optional.of(eventRepository.save(event)).orElseThrow(()->new ConflictException(""));
+        Optional.of(eventRepository.save(event)).orElseThrow(() -> new ConflictException(""));
         return PartRequestMapper.toDto(partRequestRepository.save(result));
     }
 
     @Override
     public PartRequestDto canselParticipationRequest(Long userId, Long requestId) {
         Optional<PartRequest> request = partRequestRepository.findByRequesterIdAndId(userId, requestId);
-        if (request.isEmpty() )
+        if (request.isEmpty())
             throw new NullObjectException("Request with id=" + requestId + " was not found");
 
         Event event = eventRepository.findById(request.get().getEventId())

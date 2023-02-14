@@ -10,9 +10,13 @@ import java.util.Set;
 
 @Repository
 public interface PartRequestRepository extends JpaRepository<PartRequest, Long> {
-     Optional<PartRequest> findByRequesterIdAndId(Long userId, Long requestId);
-     Optional<PartRequest> findByEventId(Long event);
-     List<PartRequest> getByEventIdAndIdIn(Long eventId, Set<Long> requestId);
-     List<PartRequest> getByEventId(Long eventId);
-     List<PartRequest> getByRequesterId(Long userId);
+    Optional<PartRequest> findByRequesterIdAndId(Long userId, Long requestId);
+
+    Optional<PartRequest> findByEventId(Long event);
+
+    List<PartRequest> getByEventIdAndIdIn(Long eventId, Set<Long> requestId);
+
+    List<PartRequest> getByEventId(Long eventId);
+
+    List<PartRequest> getByRequesterId(Long userId);
 }
