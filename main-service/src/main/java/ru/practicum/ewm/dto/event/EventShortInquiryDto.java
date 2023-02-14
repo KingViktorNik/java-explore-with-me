@@ -10,60 +10,70 @@ import java.util.Set;
 @Getter
 @AllArgsConstructor
 public class EventShortInquiryDto {
-    /** текст для поиска в содержимом аннотации и подробном описании события **/
+    /**
+     * текст для поиска в содержимом аннотации и подробном описании события
+     **/
     private final String text;
 
-    /** список идентификаторов категорий в которых будет вестись поиск **/
+    /**
+     * список идентификаторов категорий в которых будет вестись поиск
+     **/
     private final Set<Long> categories;
 
-    /** поиск:
-     * @TRUE    - платных
-     * @FALSE   - бесплатных событий
-     * @NULL    - все
-     * **/
+    /**
+     * поиск:
+     *
+     * @TRUE - платных
+     * @FALSE - бесплатных событий
+     * @NULL - все
+     **/
     private final Boolean paid;
 
-    /** дата и время события  **/
-    private final Range range;
+    /**
+     * дата и время события
+     * Дата и время начало 'С'
+     **/
+    private final LocalDateTime start;
 
-    /** только события у которых:
-     * @TRUE    - не исчерпан лимит запросов на участие
-     * @FALSE   - все
-     * **/
+    /**
+     * Дата и время окончания 'ДО'
+     **/
+    private final LocalDateTime end;
+
+
+    /**
+     * только события у которых:
+     *
+     * @TRUE - не исчерпан лимит запросов на участие
+     * @FALSE - все
+     **/
     private final Boolean onlyAvailable;
 
-    /** Вариант сортировки:
-     * @EVENT_DATE  - по дате события
-     * @VIEWS       - по количеству просмотров
-     * **/
+    /**
+     * Вариант сортировки:
+     *
+     * @EVENT_DATE - по дате события
+     * @VIEWS - по количеству просмотров
+     **/
     private final EventSort sort;
 
-    /** Пагинация **/
-    private final Page page;
+    /**
+     * Пагинация
+     **/
+    private final Integer from;
 
-    @Getter
-    @AllArgsConstructor
-    public final static class Range {
-        /** Дата и время начало 'С' **/
-        private final LocalDateTime start;
-
-        /** Дата и время окончания 'ДО' **/
-        private final LocalDateTime end;
-    }
-
-    @Getter
-    @AllArgsConstructor
-    public final static class Page {
-        private final Integer from;
-        private final Integer size;
-    }
+    private final Integer size;
 
 
     public enum EventSort {
-        /** по дате **/
+        /**
+         * по дате
+         **/
         EVENT_DATE,
 
-        /** по количеству просмотров **/
+        /**
+         * по количеству просмотров
+         **/
         VIEWS;
 
         public static Optional<EventSort> from(String stringState) {

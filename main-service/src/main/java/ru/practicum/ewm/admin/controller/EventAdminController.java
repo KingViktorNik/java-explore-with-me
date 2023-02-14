@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.admin.service.event.EventAdminService;
 import ru.practicum.ewm.dto.event.EventFullDto;
 import ru.practicum.ewm.dto.event.EventInquiryDto;
-import ru.practicum.ewm.dto.event.EventInquiryDto.Range;
-import ru.practicum.ewm.dto.event.EventInquiryDto.Page;
 import ru.practicum.ewm.dto.event.EventUpdateDto;
 import ru.practicum.ewm.exception.ConflictException;
 import ru.practicum.ewm.model.event.enums.EventState;
@@ -17,6 +15,7 @@ import ru.practicum.ewm.util.DateTimeConverter;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -50,15 +49,13 @@ public class EventAdminController {
                 .collect(toSet()
                 );
 
-        // Проверка валидности дат и парсинг в LocalDateTime
-        Range range = new Range(
+        return service.getEvents(new EventInquiryDto(users,
+                states, categories,
                 rangeStart == null ? null : DateTimeConverter.toDateTime(rangeStart),
-                rangeEnd == null ? null : DateTimeConverter.toDateTime(rangeEnd)
-        );
-
-        Page page = new Page(from, size);
-
-        return service.getEvents(new EventInquiryDto(users, states, categories, range, page));
+                rangeEnd == null ? null : DateTimeConverter.toDateTime(rangeEnd),
+                from,
+                size
+        ));
     }
 
     @PatchMapping(path = "/{eventId}", consumes = MediaType.APPLICATION_JSON_VALUE)

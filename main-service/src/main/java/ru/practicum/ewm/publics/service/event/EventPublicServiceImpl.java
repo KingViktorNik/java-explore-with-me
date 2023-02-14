@@ -36,13 +36,13 @@ public class EventPublicServiceImpl implements EventPublicService {
                 .add(dto.getText(), event.description::containsIgnoreCase)
                 .add(dto.getCategories(), event.category.id::in)
                 .add(dto.getPaid(), event.paid::eq)
-                .add(dto.getRange().getStart(), event.eventDate::after)
-                .add(dto.getRange().getEnd(), event.eventDate::before)
+                .add(dto.getStart(), event.eventDate::after)
+                .add(dto.getEnd(), event.eventDate::before)
                 .add(dto.getOnlyAvailable(), event.available::eq)
                 .buildOr();
 
-        List<Event> result = repository.findAll(predicate, PageRequest.of(dto.getPage().getFrom(),
-                dto.getPage().getSize())).stream().collect(toList());
+        List<Event> result = repository.findAll(predicate, PageRequest.of(dto.getFrom(),
+                dto.getSize())).stream().collect(toList());
 
         List<EndpointHitDto> hitDtos = new ArrayList<>();
         for (int i = 0; i < result.size(); i++) {

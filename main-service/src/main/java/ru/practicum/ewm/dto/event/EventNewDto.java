@@ -82,7 +82,7 @@ public class EventNewDto {
         /**
          * долгота
          **/
-        private Float Lon;
+        private Float lon;
     }
 
 }

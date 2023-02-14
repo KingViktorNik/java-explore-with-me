@@ -40,10 +40,10 @@ public class EventAdminServiceImpl implements EventAdminService {
                 .add(dto.getUsers(), event.initiator.id::in)
                 .add(dto.getStates(), event.state::in)
                 .add(dto.getCategories(), event.category.id::in)
-                .add(dto.getRange().getStart(), event.eventDate::after)
-                .add(dto.getRange().getEnd(), event.eventDate::before)
+                .add(dto.getStart(), event.eventDate::after)
+                .add(dto.getEnd(), event.eventDate::before)
                 .buildAnd();
-        return eventRepository.findAll(predicate, PageRequest.of(dto.getPage().getFrom(), dto.getPage().getSize())).stream()
+        return eventRepository.findAll(predicate, PageRequest.of(dto.getFrom(), dto.getSize())).stream()
                 .map(EventMapper::toFullDto)
                 .collect(toList());
     }

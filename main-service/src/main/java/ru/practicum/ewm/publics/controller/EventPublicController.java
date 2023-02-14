@@ -43,14 +43,17 @@ public class EventPublicController {
         EventSort views = viewsSt == null || viewsSt.isEmpty() ? null : EventSort.from(viewsSt)
                 .orElseThrow(() -> new ConflictException("sort '" + viewsSt + "' does not exist"));
 
-        // Проверка валидности дат и парсинг в LocalDateTime
-        Range range = new Range(
+        EventShortInquiryDto dto = new EventShortInquiryDto(
+                text,
+                categories,
+                paid,
                 rangeStart == null ? null : DateTimeConverter.toDateTime(rangeStart),
-                rangeEnd == null ? null : DateTimeConverter.toDateTime(rangeEnd)
+                rangeEnd == null ? null : DateTimeConverter.toDateTime(rangeEnd),
+                onlyAvailable,
+                views,
+                from,
+                size
         );
-
-        Page page = new Page(from, size);
-        EventShortInquiryDto dto = new EventShortInquiryDto(text, categories, paid, range, onlyAvailable, views, page);
 
         return service.getEvents(dto);
     }

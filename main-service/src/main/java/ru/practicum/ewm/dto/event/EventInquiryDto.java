@@ -27,32 +27,15 @@ public class EventInquiryDto {
     /**
      * Период времени событий
      **/
-    private final Range range;
+    private final LocalDateTime start;
+
+    private final LocalDateTime end;
 
     /**
      * Пагинация
      **/
-    private final Page page;
+    private final Integer from;
 
+    private final Integer size;
 
-    @Getter
-    @AllArgsConstructor
-    public final static class Range {
-        /**
-         * Дата и время начало 'С'
-         **/
-        private final LocalDateTime start;
-
-        /**
-         * Дата и время окончания 'ДО'
-         **/
-        private final LocalDateTime end;
-    }
-
-    @Getter
-    @AllArgsConstructor
-    public final static class Page {
-        private final Integer from;
-        private final Integer size;
-    }
 }
