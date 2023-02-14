@@ -15,7 +15,6 @@ import ru.practicum.ewm.util.DateTimeConverter;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
