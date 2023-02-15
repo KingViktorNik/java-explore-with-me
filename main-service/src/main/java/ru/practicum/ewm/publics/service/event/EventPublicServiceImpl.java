@@ -48,7 +48,7 @@ public class EventPublicServiceImpl implements EventPublicService {
         List<EndpointHitDto> hitDtos = new ArrayList<>();
         for (int i = 0; i < result.size(); i++) {
             result.get(i).setViews(result.get(i).getViews() + 1);
-            EndpointHitDto hitDto = new EndpointHitDto(request.getRequestURI() +"/"+ result.get(i).getId(), request.getRemoteAddr());
+            EndpointHitDto hitDto = new EndpointHitDto(request.getRequestURI() + "/" + result.get(i).getId(), request.getRemoteAddr());
             hitDtos.add(hitDto);
         }
         client.saveHit(new EndpointHitDto(request.getRequestURI(), request.getRemoteAddr()));
