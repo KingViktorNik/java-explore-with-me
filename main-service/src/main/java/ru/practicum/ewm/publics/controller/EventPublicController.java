@@ -13,6 +13,7 @@ import ru.practicum.ewm.exception.ConflictException;
 import ru.practicum.ewm.publics.service.event.EventPublicService;
 import ru.practicum.ewm.util.DateTimeConverter;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -37,7 +38,8 @@ public class EventPublicController {
                                          @RequestParam(name = "onlyAvailable", required = false, defaultValue = "false") Boolean onlyAvailable,
                                          @RequestParam(name = "sort", required = false, defaultValue = "VIEWS") String viewsSt,
                                          @RequestParam(name = "from", required = false, defaultValue = "0") @Min(0) Integer from,
-                                         @RequestParam(name = "size", required = false, defaultValue = "10") @Min(1) Integer size) {
+                                         @RequestParam(name = "size", required = false, defaultValue = "10") @Min(1) Integer size,
+                                         HttpServletRequest request) {
 
         // Проверка валидации значения сортировки и парсинг в ENUM
         EventSort views = viewsSt == null || viewsSt.isEmpty() ? null : EventSort.from(viewsSt)
@@ -55,11 +57,11 @@ public class EventPublicController {
                 size
         );
 
-        return service.getEvents(dto);
+        return service.getEvents(dto, request);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EventFullDto> getEvent(@PathVariable @NotNull Long id) {
-        return ResponseEntity.ok(service.getEvent(id));
+    public ResponseEntity<EventFullDto> getEvent(@PathVariable @NotNull Long id, HttpServletRequest request) {
+        return ResponseEntity.ok(service.getEvent(id, request));
     }
 }

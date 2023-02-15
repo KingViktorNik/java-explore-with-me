@@ -25,7 +25,9 @@ public class StatsController {
     @PostMapping(path = "/hit", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<EndpointHitDto> saveHit(@Valid @RequestBody EndpointHitDto endpointHitDto) {
         endpointHitDto = service.saveHit(endpointHitDto);
-        log.info("[POST] saveHit id:{}", endpointHitDto.getId());
+        log.info("[POST] saveHit id:{} ip:{}", endpointHitDto.getId(),endpointHitDto.getIp());
+        log.info("client ip: {}", endpointHitDto.getIp());
+        log.info("endpoint path: {}", endpointHitDto.getUri());
         return ResponseEntity.status(201).body(endpointHitDto);
     }
 

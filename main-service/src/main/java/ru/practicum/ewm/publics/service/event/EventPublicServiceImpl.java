@@ -15,6 +15,7 @@ import ru.practicum.ewm.model.event.enums.EventState;
 import ru.practicum.ewm.repository.EventRepository;
 import ru.practicum.ewm.util.QPredicates;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class EventPublicServiceImpl implements EventPublicService {
     private final StatsClient client;
 
     @Override
-    public List<ru.practicum.ewm.dto.event.EventShortDto> getEvents(EventShortInquiryDto dto) {
+    public List<ru.practicum.ewm.dto.event.EventShortDto> getEvents(EventShortInquiryDto dto, HttpServletRequest request) {
         Predicate predicate = QPredicates.builder()
                 .add(EventState.PUBLISHED, event.state::eq)
                 .add(dto.getText(), event.annotation::containsIgnoreCase)
@@ -47,10 +48,10 @@ public class EventPublicServiceImpl implements EventPublicService {
         List<EndpointHitDto> hitDtos = new ArrayList<>();
         for (int i = 0; i < result.size(); i++) {
             result.get(i).setViews(result.get(i).getViews() + 1);
-            EndpointHitDto hitDto = new EndpointHitDto("/events/" + result.get(i).getId(), "IP");
+            EndpointHitDto hitDto = new EndpointHitDto(request.getRequestURI() +"/"+ result.get(i).getId(), request.getRemoteAddr());
             hitDtos.add(hitDto);
         }
-        client.saveHit(new EndpointHitDto("/events", "IP"));
+        client.saveHit(new EndpointHitDto(request.getRequestURI(), request.getRemoteAddr()));
 
         if (!result.isEmpty()) {
             repository.saveAll(result);
@@ -70,12 +71,12 @@ public class EventPublicServiceImpl implements EventPublicService {
     }
 
     @Override
-    public EventFullDto getEvent(Long id) {
+    public EventFullDto getEvent(Long id, HttpServletRequest request) {
         Event event = repository.findByIdAndState(id, EventState.PUBLISHED)
                 .orElseThrow(() -> new NullPointerException("Event with id=" + id + " was not found"));
         event.setViews(event.getViews() + 1);
         repository.save(event);
-        EndpointHitDto hitDto = new EndpointHitDto("/events/" + event.getId(), "IP");
+        EndpointHitDto hitDto = new EndpointHitDto(request.getRequestURI(), request.getRemoteAddr());
         client.saveHit(hitDto);
         return EventMapper.toFullDto(event);
     }

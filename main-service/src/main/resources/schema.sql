@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS events
     location_lon       REAL          NOT NULL, -- Долгота места проведения события
     paid               BOOLEAN DEFAULT FALSE,  -- Оплата участие в событии
     participant_limit  INT     DEFAULT 0,      -- Ограничение на количество участников.
-    available          BOOLEAN DEFAULT TRUE,   -- Доступнасть для участия
+    available          BOOLEAN DEFAULT TRUE,   -- Доступность для участия
     request_moderation BOOLEAN DEFAULT TRUE,   -- Модерация заявок на участие
     title              VARCHAR(120)  NOT NULL, -- Заголовок события
     state              VARCHAR(10)   NOT NULL, -- Состояний жизненного цикла события (PENDING, PUBLISHED, CANCELED)
