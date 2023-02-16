@@ -9,13 +9,18 @@ import java.util.List;
 public interface EventAdminService {
     /**
      * Поиск событий
+     *
+     * @param eventInquiryDto новое событие
+     * @return List < EventFullDto >
      **/
-    List<EventFullDto> getEvents(EventInquiryDto dto);
-
-    void getEven();
+    List<EventFullDto> getEvents(EventInquiryDto eventInquiryDto);
 
     /**
-     * Редактирование данных события и его статуса (отклонение/публикация).
+     * Редактирование данных события и его статуса
+     *
+     * @param eventId   идентификатор события
+     * @param updateDto новое событие
+     * @return EventFullDto
      **/
     EventFullDto updateEvent(Long eventId, EventUpdateDto updateDto);
 

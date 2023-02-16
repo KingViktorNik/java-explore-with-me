@@ -23,10 +23,15 @@ public class CategoryPublicController {
     public List<CategoryDto> getCategories(@RequestParam(value = "from", defaultValue = "0") @Min(0) Integer from,
                                            @RequestParam(value = "size", defaultValue = "10") @Min(1) Integer size) {
         return service.getCategories(from, size);
+
     }
 
     @GetMapping("/{catId}")
     private ResponseEntity<CategoryDto> getCategory(@PathVariable Long catId) {
-        return ResponseEntity.ok(service.getCategory(catId));
+        CategoryDto result = service.getCategory(catId);
+
+        return ResponseEntity.status(200).body(result);
+
     }
+
 }

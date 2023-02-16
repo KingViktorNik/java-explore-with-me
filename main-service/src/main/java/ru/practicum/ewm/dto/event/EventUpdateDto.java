@@ -10,57 +10,41 @@ import ru.practicum.ewm.model.event.EventLocation;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EventUpdateDto {
-    /**
-     * Краткое описание
-     **/
+    /** Краткое описание */
     private String annotation;
 
-    /**
-     * id категории к которой относится событие
-     */
+    /** id категории к которой относится событие */
     private Long category;
 
-    /**
-     * Полное описание события
-     **/
+    /** Полное описание события */
     private String description;
 
-    /**
-     * Дата и время на которые намечено событие (в формате "yyyy-MM-dd HH:mm:ss")
-     **/
+    /** Дата и время на которые намечено событие */
     private String eventDate;
 
-    /**
-     * Места проведения события
-     **/
+    /** Места проведения события */
     private EventLocation eventLocation;
 
-    /**
-     * Нужно ли оплачивать участие
-     **/
+    /** Нужно ли оплачивать участие */
     private Boolean paid;
 
     /**
      * Ограничение на количество участников.
      *
-     * @default: 0 - означает отсутствие ограничения
+     * default: 0 - означает отсутствие ограничения
      **/
     private Integer participantLimit;
 
     /**
      * Нужна ли пре-модерация заявок на участие
      *
-     * @default: true
+     * default: true
      **/
     private Boolean requestModeration;
 
-    /**
-     * Состояния события
-     **/
+    /** Состояния события */
     private String stateAction;
 
-    /**
-     * Заголовок события
-     */
+    /** Заголовок события */
     private String title;
 }

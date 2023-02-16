@@ -13,9 +13,6 @@ public interface EventShort {
 /** Краткое описание **/
     String getAnnotation();
 
-/** Краткое описание **/
-    String getDescription();
-
 /** Категория **/
     Category getCategory();
 

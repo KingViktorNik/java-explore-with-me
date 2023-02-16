@@ -10,7 +10,7 @@ public class StatsClientConfig {
     @Value("${spring.application.name}")
     private String application;
 
-    @Value("${stats-server.port}")
+    @Value("${stats-server}")
     private String serverUri;
 
 

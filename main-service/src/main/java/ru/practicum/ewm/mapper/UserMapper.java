@@ -10,6 +10,7 @@ public class UserMapper {
                 userDto.getEmail(),
                 userDto.getName()
         );
+
     }
 
     public static UserDto toDto(User user) {
@@ -18,5 +19,7 @@ public class UserMapper {
                 user.getEmail(),
                 user.getName()
         );
+
     }
+
 }

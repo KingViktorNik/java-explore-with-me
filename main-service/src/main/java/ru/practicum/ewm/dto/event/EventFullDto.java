@@ -10,107 +10,62 @@ import ru.practicum.ewm.model.event.enums.EventState;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EventFullDto {
-    /**
-     * Краткое описание
-     **/
+    /** Краткое описание **/
     private String annotation;
 
-    /**
-     * Категория
-     **/
+    /** Категория **/
     private Category category;
 
-    /**
-     * Количество одобренных заявок на участие в данном событии
-     **/
+    /** Количество одобренных заявок на участие в данном событии **/
     private Integer confirmedRequests;
 
-    /**
-     * Дата и время создания события (в формате "yyyy-MM-dd HH:mm:ss")
-     **/
+    /** Дата и время создания события (в формате "yyyy-MM-dd HH:mm:ss") **/
     private String createdOn;
 
-    /**
-     * Полное описание события
-     **/
+    /** Полное описание события **/
     private String description;
 
-    /**
-     * Дата и время на которые намечено событие (в формате "yyyy-MM-dd HH:mm:ss")
-     **/
+    /** Дата и время на которые намечено событие (в формате "yyyy-MM-dd HH:mm:ss") **/
     private String eventDate;
 
-    /**
-     * Идентификатор
-     **/
+    /** Идентификатор **/
     private Long id;
 
-    /**
-     * Пользователь (краткая информация)
-     **/
+    /** Пользователь (краткая информация) **/
     private UserShort initiator;
 
-    /**
-     * Места проведения события
-     **/
+    /** Места проведения события **/
     private Location location;
 
-    /**
-     * Нужно ли оплачивать участие
-     **/
+    /** Нужно ли оплачивать участие **/
     private Boolean paid;
 
-    /**
-     * Ограничение на количество участников.
-     *
-     * @default: 0 - означает отсутствие ограничения
-     **/
+    /** Ограничение на количество участников **/
     private Integer participantLimit;
 
-    /**
-     * Дата и время публикации события (в формате "yyyy-MM-dd HH:mm:ss")
-     **/
+    /** Дата и время публикации события (в формате "yyyy-MM-dd HH:mm:ss") **/
     private String publishedOn;
 
-    /**
-     * Нужна ли пре-модерация заявок на участие
-     *
-     * @default: true
-     **/
+    /** Нужна ли пре-модерация заявок на участие **/
     private Boolean requestModeration;
 
-    /**
-     * Список состояний жизненного цикла события
-     * ENUM
-     *
-     * @PENDING - В ОЖИДАНИИ
-     * @PUBLISHED - ОПУБЛИКОВАНО
-     * @CANCELED - ОТМЕНЕНО
-     **/
+    /** Список состояний жизненного цикла события **/
     private EventState state;
 
-    /**
-     * Заголовок
-     **/
+    /** Заголовок **/
     private String title;
 
-    /**
-     * Количество просмотрев события
-     **/
+    /** Количество просмотрев события **/
     private Integer views;
 
     @Getter
     @Setter
     @AllArgsConstructor
     public static final class UserShort {
-        /**
-         * Идентификатор
-         **/
+        /** Идентификатор **/
         private Long id;
 
-        /**
-         * Имя пользователя
-         **/
+        /** Имя пользователя **/
         private String name;
     }
 
@@ -118,14 +73,10 @@ public class EventFullDto {
     @Setter
     @AllArgsConstructor
     public static final class Category {
-        /**
-         * Идентификатор
-         **/
+        /** Идентификатор **/
         private Long id;
 
-        /**
-         * Название
-         **/
+        /** Название **/
         private String name;
     }
 
@@ -133,14 +84,11 @@ public class EventFullDto {
     @Setter
     @AllArgsConstructor
     public static final class Location {
-        /**
-         * Широта
-         **/
+        /** Широта **/
         private Float lat;
 
-        /**
-         * Долгота
-         **/
+        /** Долгота **/
         private Float lon;
     }
+
 }

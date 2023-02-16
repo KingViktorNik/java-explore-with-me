@@ -6,19 +6,19 @@ public interface CategoryAdminService {
     /**
      * Добавление новый категории
      *
-     * @param categoryDto
-     * @return
+     * @param categoryDto новая категория
+     * @return CategoryDto
      */
     CategoryDto addCategory(CategoryDto categoryDto);
 
     /**
      * Изменение категории
      *
-     * @param categoryDto
      * @param catId       идентификатор категории
+     * @param categoryDto новая категория
      * @return CategoryDto
      */
-    CategoryDto updateCategory(CategoryDto categoryDto, Long catId);
+    CategoryDto updateCategory(Long catId, CategoryDto categoryDto);
 
     /**
      * Удаление категории
@@ -26,4 +26,5 @@ public interface CategoryAdminService {
      * @param catId идентификатор категории
      */
     void deleteCategory(Long catId);
+
 }

@@ -11,9 +11,12 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryDto {
+    /** Идентификатор категории */
     private Long id;
 
+    /** Название категории */
     @NotNull(message = "can not be null")
     @NotBlank(message = "can not be empty")
     private String name;
+
 }

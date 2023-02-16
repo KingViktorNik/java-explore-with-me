@@ -1,26 +1,18 @@
-package ru.practicum.ewm.model.partRequest.enums;
+package ru.practicum.ewm.model.part_request.enums;
 
 import java.util.Optional;
 
 public enum RequestStatus {
-    /**
-     * ПОДТВЕРЖДЕН
-     **/
+    /** ПОДТВЕРЖДЕН */
     CONFIRMED,
 
-    /**
-     * В ОЖИДАНИИ
-     **/
+    /** В ОЖИДАНИИ */
     PENDING,
 
-    /**
-     * ОТКЛОНЕН
-     **/
+    /** ОТКЛОНЕН */
     REJECTED,
 
-    /**
-     * ОТМЕНЕН
-     **/
+    /** ОТМЕНЕН */
     CANCELED;
 
     public static Optional<RequestStatus> from(String stringState) {

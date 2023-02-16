@@ -15,6 +15,7 @@ import ru.practicum.ewm.util.DateTimeConverter;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -33,34 +34,44 @@ public class EventAdminController {
     public List<EventFullDto> getEvents(@RequestParam(name = "users", required = false) Set<Long> users,
                                         @RequestParam(name = "states", required = false) List<String> statesSt,
                                         @RequestParam(name = "categories", required = false) Set<Long> categories,
-                                        @RequestParam(name = "rangeStart", required = false) String rangeStart,
-                                        @RequestParam(name = "rangeEnd", required = false) String rangeEnd,
+                                        @RequestParam(name = "rangeStart", required = false) String rangeStartSt,
+                                        @RequestParam(name = "rangeEnd", required = false) String rangeEndSt,
                                         @RequestParam(name = "from", defaultValue = "0") @Min(0) Integer from,
                                         @RequestParam(name = "size", defaultValue = "10") @Min(1) Integer size) {
 
         // Проверка валидации статусов и парсинг в ENUM
-        Set<EventState> states = statesSt == null || statesSt.isEmpty()
-                ? null
-                : statesSt.stream()
-                .map(s -> EventState.from(s)
-                        .orElseThrow(() -> new ConflictException("status '" + s + "' does not exist"))
-                )
-                .collect(toSet()
-                );
+        Set<EventState> states = null;
+        if ((statesSt != null) && !statesSt.isEmpty()) {
+            states = statesSt
+                    .stream()
+                    .map(s -> EventState.from(s)
+                                        .orElseThrow(() -> new ConflictException("status '" + s + "' does not exist")))
+                    .collect(toSet());
+        }
 
-        return service.getEvents(new EventInquiryDto(users,
-                states, categories,
-                rangeStart == null ? null : DateTimeConverter.toDateTime(rangeStart),
-                rangeEnd == null ? null : DateTimeConverter.toDateTime(rangeEnd),
-                from,
-                size
-        ));
+        LocalDateTime rangeStart = LocalDateTime.now();
+        if (rangeStartSt != null) {
+            rangeStart = DateTimeConverter.toDateTime(rangeStartSt);
+        }
+
+        LocalDateTime rangeEnd = null;
+        if (rangeEndSt != null) {
+            rangeEnd = DateTimeConverter.toDateTime(rangeEndSt);
+        }
+
+        EventInquiryDto inquiryDto = new EventInquiryDto(users, states, categories, rangeStart, rangeEnd, from, size);
+
+        return service.getEvents(inquiryDto);
+
     }
 
     @PatchMapping(path = "/{eventId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<EventFullDto> updateEvent(@PathVariable Long eventId,
                                                     @Valid @RequestBody EventUpdateDto updateDto) {
-        return ResponseEntity.ok(service.updateEvent(eventId, updateDto));
+        EventFullDto eventFullDto = service.updateEvent(eventId, updateDto);
+
+        return ResponseEntity.status(200).body(eventFullDto);
 
     }
+
 }

@@ -28,18 +28,29 @@ public class PartRequestPrivateController {
         if (userId == null || eventId == null) {
             throw new ValidationException("Incorrectly made request.");
         }
-        Long id = Optional.of(Long.parseLong(userId)).orElseThrow(() -> new ValidationException("Incorrectly made request."));
-        return ResponseEntity.status(201).body(service.addParticipationRequest(id, eventId));
+
+        Long id = Optional.of(Long.parseLong(userId))
+                          .orElseThrow(() -> new ValidationException("Incorrectly made request."));
+
+        PartRequestDto result = service.addParticipationRequest(id, eventId);
+
+        return ResponseEntity.status(201).body(result);
+
     }
 
     @PatchMapping("/{requestId}/cancel")
     public ResponseEntity<PartRequestDto> canselParticipationRequest(@PathVariable("userId") Long userId,
                                                                      @PathVariable("requestId") Long requestId) {
-        return ResponseEntity.ok(service.canselParticipationRequest(userId, requestId));
+        PartRequestDto result = service.canselParticipationRequest(userId, requestId);
+
+        return ResponseEntity.status(200).body(result);
+
     }
 
     @GetMapping
     public List<PartRequestDto> getParticipationRequests(@PathVariable Long userId) {
         return service.getParticipationRequests(userId);
+
     }
+
 }

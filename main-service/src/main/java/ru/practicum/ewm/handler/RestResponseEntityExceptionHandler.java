@@ -13,7 +13,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.practicum.ewm.exception.ConflictException;
-import ru.practicum.ewm.exception.NullObjectException;
+import ru.practicum.ewm.exception.NotFoundException;
 import ru.practicum.ewm.exception.ValidationException;
 
 import java.time.LocalDateTime;
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<?> handlerNullObjectException(final NullObjectException ex, WebRequest request) {
+    public ResponseEntity<?> handlerNullObjectException(final NotFoundException ex, WebRequest request) {
         log.error("not found error. Message: {}", ex.getMessage(), ex);
         Map<String, Object> body = getGeneralErrorBody(HttpStatus.NOT_FOUND, "The required object was not found.", ex.getMessage());
         return handleExceptionInternal(ex, body, new HttpHeaders(), HttpStatus.NOT_FOUND, request);

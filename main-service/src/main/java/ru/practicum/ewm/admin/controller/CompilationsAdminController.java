@@ -1,7 +1,6 @@
 package ru.practicum.ewm.admin.controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -14,30 +13,39 @@ import ru.practicum.ewm.dto.compilation.CompilationUpdateDto;
 import javax.validation.Valid;
 
 
+@Validated
 @RestController
 @RequestMapping(value = "/admin/compilations",
         consumes = MediaType.ALL_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE
 )
 @AllArgsConstructor
-@Validated
 public class CompilationsAdminController {
     private final CompilationsAdminService service;
 
-    @PostMapping//(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CompilationDto> addCompilation(@RequestBody @Valid CompilationNewDto compilationNewDto) {
-        return ResponseEntity.status(201).body(service.addCompilation(compilationNewDto));
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<CompilationDto> addCompilation(@Valid @RequestBody CompilationNewDto compilationNewDto) {
+        CompilationDto result = service.addCompilation(compilationNewDto);
+
+        return ResponseEntity.status(201).body(result);
+
     }
 
-    @PatchMapping("/{compId}")
+    @PatchMapping(path = "/{compId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CompilationDto> updateCompilation(@PathVariable Long compId,
-                                                            @RequestBody CompilationUpdateDto compilationUpdateDto) {
-        return ResponseEntity.ok(service.updateCompilation(compId, compilationUpdateDto));
+                                                            @Valid @RequestBody CompilationUpdateDto compilationUpdateDto) {
+        CompilationDto result = service.updateCompilation(compId, compilationUpdateDto);
+
+        return ResponseEntity.status(200).body(result);
+
     }
 
     @DeleteMapping("/{compId}")
     public ResponseEntity<Void> deleteCompilation(@PathVariable Long compId) {
         service.deleteCompilation(compId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        return ResponseEntity.status(204).build();
+
     }
+
 }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.practicum.ewm.dto.compilation.CompilationDto;
 import ru.practicum.ewm.dto.compilation.CompilationNewDto;
 import ru.practicum.ewm.dto.compilation.CompilationUpdateDto;
-import ru.practicum.ewm.exception.NullObjectException;
+import ru.practicum.ewm.exception.NotFoundException;
 import ru.practicum.ewm.model.Compilation;
 import ru.practicum.ewm.mapper.CompilationMapper;
 import ru.practicum.ewm.model.event.Event;
@@ -25,46 +25,52 @@ public class CompilationsAdminServiceImpl implements CompilationsAdminService {
 
     @Override
     public CompilationDto addCompilation(CompilationNewDto compilationDto) {
-        Set<Event> events = eventRepository.findByIdIn(compilationDto.getEvents()).orElse(Set.of());
+        Set<Event> events = eventRepository.findByIdIn(compilationDto.getEvents())
+                                           .orElse(Set.of());
         Compilation compilation = CompilationMapper.toEntityNew(compilationDto);
         compilation.setCompilationEvents(events);
-        compilationsRepository.save(compilation);
-        log.info("[POST] addCompilation id:{}", compilation.getId());
-        return CompilationMapper.toDto(compilation);
+        Compilation result = compilationsRepository.save(compilation);
+        log.info("addCompilation id:{}", result.getId());
+
+        return CompilationMapper.toDto(result);
+
     }
 
     @Override
     public CompilationDto updateCompilation(Long compId, CompilationUpdateDto dto) {
         Compilation compilations = compilationsRepository.findById(compId)
-                .orElseThrow(() -> new NullObjectException("Category with id=" + compId + " was not found"));
+                                                         .orElseThrow(() -> new NotFoundException("Category with id=" + compId + " was not found"));
         Compilation compilationUpdate = CompilationMapper.toEntityUpdate(dto, compilations);
 
-        Set<Long> eventIds = compilations.getCompilationEvents().stream()//1
-                .map(Event::getId)
-                .collect(Collectors.toSet()
-                );
+        Set<Long> eventIds = compilations.getCompilationEvents()
+                                         .stream()
+                                         .map(Event::getId)
+                                         .collect(Collectors.toSet());
 
         // Отбираем только новые события
         dto.getEvents().removeAll(eventIds);
 
-        Set<Event> event = eventRepository.findByIdIn(dto.getEvents()).orElse(Set.of());
+        Set<Event> event = eventRepository.findByIdIn(dto.getEvents())
+                                          .orElse(Set.of());
         event.addAll(compilations.getCompilationEvents());
         compilationUpdate.setCompilationEvents(event);
 
         if (!event.isEmpty()) {
             compilationsRepository.save(compilationUpdate);
-            log.info("[UPDATE] updateCompilation id:{}", compId);
+            log.info("updateCompilation id:{}", compId);
         }
 
         return CompilationMapper.toDto(compilationUpdate);
+
     }
 
     @Override
     public void deleteCompilation(Long compId) {
         compilationsRepository.findById(compId)
-                .orElseThrow(() -> new NullObjectException("Category with id=" + compId + " was not found"));
-
+                              .orElseThrow(() -> new NotFoundException("Category with id=" + compId + " was not found"));
         compilationsRepository.deleteById(compId);
-        log.info("[DELETE] deleteCompilation id:{}", compId);
+        log.info("deleteCompilation id:{}", compId);
+
     }
+
 }

@@ -11,7 +11,7 @@ import java.time.format.DateTimeParseException;
 import static java.net.URLDecoder.decode;
 
 public class DateTimeConverter {
-    private static DateTimeFormatter DTF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public static LocalDateTime toDateTime(String dateTime) {
         try {

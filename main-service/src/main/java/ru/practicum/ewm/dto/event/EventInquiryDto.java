@@ -9,33 +9,25 @@ import java.util.Set;
 @Getter
 @AllArgsConstructor
 public class EventInquiryDto {
-    /**
-     * список id пользователей
-     **/
+    /** список id пользователей **/
     private final Set<Long> users;
 
-    /**
-     * список состояний
-     **/
+    /** список состояний **/
     private Set<EventState> states;
 
-    /**
-     * список id категорий
-     **/
+    /** список id категорий **/
     private final Set<Long> categories;
 
-    /**
-     * Период времени событий
-     **/
+    /** Период времени событий (начало)**/
     private final LocalDateTime start;
 
+    /** Период времени событий (конец)**/
     private final LocalDateTime end;
 
-    /**
-     * Пагинация
-     **/
+    /** PageRequest страница **/
     private final Integer from;
 
+    /** PageRequest количество элементов **/
     private final Integer size;
 
 }

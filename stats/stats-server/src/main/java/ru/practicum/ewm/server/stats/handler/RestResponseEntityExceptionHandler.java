@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.practicum.ewm.server.stats.exception.ConflictException;
-import ru.practicum.ewm.server.stats.exception.NullObjectException;
+import ru.practicum.ewm.server.stats.exception.NotFoundException;
 import ru.practicum.ewm.server.stats.exception.ValidationException;
 
 import java.time.LocalDateTime;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<?> handlerNullObjectException(final NullObjectException ex, WebRequest request) {
+    public ResponseEntity<?> handlerNullObjectException(final NotFoundException ex, WebRequest request) {
         log.error("not found error. Message: {}", ex.getMessage(), ex);
         Map<String, Object> body = getGeneralErrorBody(HttpStatus.NOT_FOUND, null, ex.getMessage());
         return handleExceptionInternal(ex, body, new HttpHeaders(), HttpStatus.NOT_FOUND, request);

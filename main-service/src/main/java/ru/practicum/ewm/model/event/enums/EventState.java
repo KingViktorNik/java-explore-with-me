@@ -3,13 +3,13 @@ package ru.practicum.ewm.model.event.enums;
 import java.util.Optional;
 
 public enum EventState {
-    /** @PENDING - В ОЖИДАНИИ **/
+    /** PENDING - В ОЖИДАНИИ **/
     PENDING,
 
-    /** @PUBLISHED - ОПУБЛИКОВАНО **/
+    /** PUBLISHED - ОПУБЛИКОВАНО **/
     PUBLISHED,
 
-    /** @CANCELED - ОТМЕНЕНО **/
+    /** CANCELED - ОТМЕНЕНО **/
     CANCELED;
 
     public static Optional<EventState> from(String stringState) {

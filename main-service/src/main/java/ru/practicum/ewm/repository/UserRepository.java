@@ -10,5 +10,7 @@ import java.util.Set;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+    /** Запрос списка пользователей по идентификаторам */
     Page<User> findByIdIn(Set<Long> users, Pageable pageable);
+
 }

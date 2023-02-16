@@ -20,7 +20,7 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /** Id пользователя инициатора **/
+    /** пользователь (инициатор) **/
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User initiator;
@@ -29,7 +29,7 @@ public class Event {
     @Column(name = "annotation", length = 2000, nullable = false)
     private String annotation;
 
-    /** категория к которой относится событие **/
+    /** Категория к которой относится событие **/
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
@@ -62,6 +62,11 @@ public class Event {
     @Column(name = "participant_limit")
     private Integer participantLimit;
 
+    /** Дата и время публикации события (в формате "yyyy-MM-dd HH:mm:ss") **/
+    @Column(name = "published_on")
+    private LocalDateTime publishedOn;
+
+
     /** Доступ для участия. **/
     @Column(name = "available")
     private Boolean available;
@@ -79,7 +84,7 @@ public class Event {
     @Enumerated(EnumType.STRING)
     private EventState state;
 
-    /** Количество просмотрев события **/
+    /** Количество просмотров события **/
     @Column(name = "views")
     private Integer views;
 }

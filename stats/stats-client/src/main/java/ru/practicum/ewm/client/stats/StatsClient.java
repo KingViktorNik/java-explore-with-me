@@ -24,7 +24,7 @@ public class StatsClient {
     private final RestTemplate template;
 
     public StatsClient(@Value("${spring.application.name}") String application,
-                       @Value("${stats-server.port}") String server) {
+                       @Value("${stats-server}") String server) {
         this.app = application;
         template = new RestTemplate();
         template.setUriTemplateHandler(new DefaultUriBuilderFactory(server));
