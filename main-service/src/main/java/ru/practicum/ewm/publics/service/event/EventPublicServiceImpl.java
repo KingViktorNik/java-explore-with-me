@@ -63,12 +63,14 @@ public class EventPublicServiceImpl implements EventPublicService {
 
         return result.stream()
                 .map(EventMapper::toShortDto)
-                .sorted(((o1, o2) -> {
-                    if (dto.getSort().equals(EventShortInquiryDto.EventSort.VIEWS)) {
-                        return o2.getViews().compareTo(o1.getViews());
-                    } else {
-                        return o2.getEventDate().compareTo(o1.getEventDate());
-                    }}))
+                .sorted((o1, o2) -> {
+                            if (dto.getSort().equals(EventShortInquiryDto.EventSort.VIEWS)) {
+                                return o2.getViews().compareTo(o1.getViews());
+                            } else {
+                                return o2.getEventDate().compareTo(o1.getEventDate());
+                            }
+                        }
+                )
                 .collect(toList());
 
     }
