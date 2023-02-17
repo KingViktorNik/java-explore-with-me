@@ -24,5 +24,5 @@ public interface PartRequestRepository extends JpaRepository<PartRequest, Long> 
     List<PartRequest> getByRequesterId(Long userId);
 
     /** Запрос по id пользователя и статусу **/
-    Optional<PartRequest> findByRequesterIdAndStatus(Long userId, RequestStatus status);
+    Optional<PartRequest> findByRequesterIdAndEventIdAndStatus(Long userId, Long eventId, RequestStatus status);
 }
