@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.toList;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class RatingPublicServiceImpl implements RatingPublicService{
+public class RatingPublicServiceImpl implements RatingPublicService {
     private final RatingRepository repository;
 
     @Override

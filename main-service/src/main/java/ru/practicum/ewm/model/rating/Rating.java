@@ -32,6 +32,6 @@ public class Rating {
 
     /** Оценка пользователя */
     @Column(name = "like_event", nullable = false)
-    private Boolean like_Event;
+    private Boolean likeEvent;
 
 }
