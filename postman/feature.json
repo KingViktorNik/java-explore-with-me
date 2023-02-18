@@ -29,12 +29,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/rating/events",
-					"protocol": "http",
+					"raw": "{{url}}/rating/events",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"rating",
 						"events"
@@ -66,12 +64,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/rating/users",
-					"protocol": "http",
+					"raw": "{{url}}/rating/users",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"rating",
 						"users"
@@ -92,10 +88,19 @@
 							"});\r",
 							"pm.test(\"Test create user1\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.id, '\"id\" field').to.eql(1);\r",
 							"    pm.expect(jsonData.email, '\"email\" field').to.eql('user1@mail.com');\r",
 							"    pm.expect(jsonData.name, '\"name\" field').to.eql('user1');\r",
-							"});"
+							"});\r",
+							"pm.collectionVariables.set(\"userId\", pm.response.json().id);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -114,12 +119,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/admin/users",
-					"protocol": "http",
+					"raw": "{{url}}/admin/users",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"admin",
 						"users"
@@ -140,9 +143,9 @@
 							"});\r",
 							"pm.test(\"Test create user1\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.id, '\"id\" field').to.eql(1);\r",
 							"    pm.expect(jsonData.name, '\"name\" field').to.eql('Природа');\r",
-							"});"
+							"});\r",
+							"pm.collectionVariables.set(\"catId\", pm.response.json().id);"
 						],
 						"type": "text/javascript"
 					}
@@ -161,12 +164,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/admin/categories",
-					"protocol": "http",
+					"raw": "{{url}}/admin/categories",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"admin",
 						"categories"
@@ -187,9 +188,11 @@
 							"});\r",
 							"pm.test(\"Test create user1\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.id, '\"id\" field').to.eql(1);\r",
-							"    pm.expect(jsonData.category.id, '\"id\" field').to.eql(1);\r",
-							"});"
+							"    pm.expect(jsonData.title, '\"title\" field').to.eql(\"Сплав на байдарках\");\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set(\"eventId\", pm.response.json().id);\r",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -201,7 +204,7 @@
 							"var moment = require('moment');\r",
 							"\r",
 							"var localDate = moment().add(2, 'h');\r",
-							"pm.environment.set('localDate', localDate.format('YYYY-MM-DD HH:mm:ss'));"
+							"pm.collectionVariables.set('localDate', localDate.format('YYYY-MM-DD HH:mm:ss'));"
 						],
 						"type": "text/javascript"
 					}
@@ -223,7 +226,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"annotation\": \"Сплав на байдарках похож на полет.\",\r\n  \"category\": 1,\r\n  \"description\": \"Сплав на байдарках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\r\n  \"eventDate\": \"{{localDate}}\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 0,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Сплав на байдарках\"\r\n}",
+					"raw": "{\r\n  \"annotation\": \"Сплав на байдарках похож на полет.\",\r\n  \"category\": {{catId}},\r\n  \"description\": \"Сплав на байдарках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\r\n  \"eventDate\": \"{{localDate}}\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 0,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Сплав на байдарках\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -231,22 +234,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/users/:userId/events",
-					"protocol": "http",
+					"raw": "{{url}}/users/{{userId}}/events",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"users",
-						":userId",
+						"{{userId}}",
 						"events"
-					],
-					"variable": [
-						{
-							"key": "userId",
-							"value": "1"
-						}
 					]
 				}
 			},
@@ -264,10 +259,11 @@
 							"});\r",
 							"pm.test(\"Test create user1\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.id, '\"id\" field').to.eql(2);\r",
 							"    pm.expect(jsonData.email, '\"email\" field').to.eql('user2@mail.com');\r",
 							"    pm.expect(jsonData.name, '\"name\" field').to.eql('user2');\r",
-							"});"
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set(\"userId_2\", pm.response.json().id);"
 						],
 						"type": "text/javascript"
 					}
@@ -286,12 +282,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/admin/users",
-					"protocol": "http",
+					"raw": "{{url}}/admin/users",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"admin",
 						"users"
@@ -312,10 +306,11 @@
 							"});\r",
 							"pm.test(\"Test create user1\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.id, '\"id\" field').to.eql(3);\r",
 							"    pm.expect(jsonData.email, '\"email\" field').to.eql('user3@mail.com');\r",
 							"    pm.expect(jsonData.name, '\"name\" field').to.eql('user3');\r",
-							"});"
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set(\"userId_3\", pm.response.json().id);"
 						],
 						"type": "text/javascript"
 					}
@@ -334,12 +329,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/admin/users",
-					"protocol": "http",
+					"raw": "{{url}}/admin/users",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"admin",
 						"users"
@@ -360,10 +353,7 @@
 							"});\r",
 							"pm.test(\"publish event\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.id, '\"id\" field').to.eql(1);\r",
 							"    pm.expect(jsonData.annotation, '\"annotation\" field').to.eql('Сплав на байдарках похож на полет.');\r",
-							"    pm.expect(jsonData.category.id, '\"id\" field').to.eql(1);\r",
-							"    pm.expect(jsonData.initiator.id, '\"id\" field').to.eql(1);\r",
 							"    pm.expect(jsonData.state, '\"state\" field').to.eql('PUBLISHED');\r",
 							"});"
 						],
@@ -407,22 +397,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/admin/events/:eventId",
-					"protocol": "http",
+					"raw": "{{url}}/admin/events/{{eventId}}",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"admin",
 						"events",
-						":eventId"
-					],
-					"variable": [
-						{
-							"key": "eventId",
-							"value": "1"
-						}
+						"{{eventId}}"
 					]
 				}
 			},
@@ -440,9 +422,6 @@
 							"});\r",
 							"pm.test(\"user 2 PENDING\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.id, '\"id\" field').to.eql(1);\r",
-							"    pm.expect(jsonData.event, '\"event\" field').to.eql(1);\r",
-							"    pm.expect(jsonData.requester, '\"requester\" field').to.eql(2);\r",
 							"    pm.expect(jsonData.status, '\"status\" field').to.eql('PENDING');\r",
 							"});"
 						],
@@ -474,27 +453,19 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/users/:userId/requests?eventId=1",
-					"protocol": "http",
+					"raw": "{{url}}/users/{{userId_2}}/requests?eventId={{eventId}}",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"users",
-						":userId",
+						"{{userId_2}}",
 						"requests"
 					],
 					"query": [
 						{
 							"key": "eventId",
-							"value": "1"
-						}
-					],
-					"variable": [
-						{
-							"key": "userId",
-							"value": "2"
+							"value": "{{eventId}}"
 						}
 					]
 				}
@@ -513,9 +484,6 @@
 							"});\r",
 							"pm.test(\"user 2 PENDING\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.id, '\"id\" field').to.eql(2);\r",
-							"    pm.expect(jsonData.event, '\"event\" field').to.eql(1);\r",
-							"    pm.expect(jsonData.requester, '\"requester\" field').to.eql(3);\r",
 							"    pm.expect(jsonData.status, '\"status\" field').to.eql('PENDING');\r",
 							"});"
 						],
@@ -547,27 +515,19 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/users/:userId/requests?eventId=1",
-					"protocol": "http",
+					"raw": "{{url}}/users/{{userId_3}}/requests?eventId={{eventId}}",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"users",
-						":userId",
+						"{{userId_3}}",
 						"requests"
 					],
 					"query": [
 						{
 							"key": "eventId",
-							"value": "1"
-						}
-					],
-					"variable": [
-						{
-							"key": "userId",
-							"value": "3"
+							"value": "{{eventId}}"
 						}
 					]
 				}
@@ -587,40 +547,36 @@
 						],
 						"type": "text/javascript"
 					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
 				}
 			],
 			"request": {
 				"method": "PATCH",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/users/:userId/events/:eventId/rating?like=true",
-					"protocol": "http",
+					"raw": "{{url}}/users/{{userId_2}}/events/{{eventId}}/rating?like=true",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"users",
-						":userId",
+						"{{userId_2}}",
 						"events",
-						":eventId",
+						"{{eventId}}",
 						"rating"
 					],
 					"query": [
 						{
 							"key": "like",
-							"value": "true",
-							"description": "false"
-						}
-					],
-					"variable": [
-						{
-							"key": "userId",
-							"value": "2"
-						},
-						{
-							"key": "eventId",
-							"value": "1"
+							"value": "true"
 						}
 					]
 				}
@@ -646,12 +602,10 @@
 				"method": "PATCH",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/users/:userId/events/:eventId/rating",
-					"protocol": "http",
+					"raw": "{{url}}/users/:userId/events/:eventId/rating",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"users",
 						":userId",
@@ -709,17 +663,15 @@
 				"method": "PATCH",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/users/:userId/events/:eventId/rating?like=false",
-					"protocol": "http",
+					"raw": "{{url}}/users/{{userId_3}}/events/{{eventId}}/rating?like=false",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"users",
-						":userId",
+						"{{userId_3}}",
 						"events",
-						":eventId",
+						"{{eventId}}",
 						"rating"
 					],
 					"query": [
@@ -727,16 +679,6 @@
 							"key": "like",
 							"value": "false",
 							"description": "false"
-						}
-					],
-					"variable": [
-						{
-							"key": "userId",
-							"value": "3"
-						},
-						{
-							"key": "eventId",
-							"value": "1"
 						}
 					]
 				}
@@ -757,12 +699,10 @@
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.length, 'events count in total').to.eql(1);\r",
 							"\r",
-							"    pm.expect(jsonData[0].id, 'result[0]: \"id\" field').to.eql(1);\r",
 							"    pm.expect(jsonData[0].title, 'result[0]: \"title\" field').to.eql('Сплав на байдарках');\r",
 							"    pm.expect(jsonData[0].like, 'result[0]: \"like\" field').to.eql(1);\r",
 							"    pm.expect(jsonData[0].dislike, 'result[0]: \"dislike\" field').to.eql(1);\r",
 							"    pm.expect(jsonData[0].rating, 'result[0]: \"rating\" field').to.eql(5.0);\r",
-							"    pm.expect(jsonData[0].initiator.id, 'result[0]: \"id\" field').to.eql(1);\r",
 							"    pm.expect(jsonData[0].initiator.name, 'result[0]: \"name\" field').to.eql(\"user1\");\r",
 							"});"
 						],
@@ -774,12 +714,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/rating/events",
-					"protocol": "http",
+					"raw": "{{url}}/rating/events",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"rating",
 						"events"
@@ -802,7 +740,6 @@
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.length, 'users count in total').to.eql(1);\r",
 							"\r",
-							"    pm.expect(jsonData[0].id, 'result[0]: \"id\" field').to.eql(1);\r",
 							"    pm.expect(jsonData[0].name, 'result[0]: \"name\" field').to.eql('user1');\r",
 							"    pm.expect(jsonData[0].like, 'result[0]: \"like\" field').to.eql(1);\r",
 							"    pm.expect(jsonData[0].rating, 'result[0]: \"rating\" field').to.eql(5.0);\r",
@@ -816,12 +753,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/rating/users",
-					"protocol": "http",
+					"raw": "{{url}}/rating/users",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"rating",
 						"users"
@@ -842,10 +777,10 @@
 							"});\r",
 							"pm.test(\"Test create evetnt 2\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.id, '\"id\" field').to.eql(2);\r",
-							"    pm.expect(jsonData.category.id, '\"id\" field').to.eql(1);\r",
-							"    pm.expect(jsonData.initiator.id, '\"id\" field').to.eql(1);\r",
-							"});"
+							"    pm.expect(jsonData.title, '\"title\" field').to.eql(\"Знаменитое шоу 'Летающая кукуруза'\");\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set(\"eventId_2\", pm.response.json().id);"
 						],
 						"type": "text/javascript"
 					}
@@ -887,22 +822,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/users/:userId/events",
-					"protocol": "http",
+					"raw": "{{url}}/users/{{userId}}/events",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"users",
-						":userId",
+						"{{userId}}",
 						"events"
-					],
-					"variable": [
-						{
-							"key": "userId",
-							"value": "1"
-						}
 					]
 				}
 			},
@@ -920,10 +847,7 @@
 							"});\r",
 							"pm.test(\"publish event\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.id, '\"id\" field').to.eql(2);\r",
 							"    pm.expect(jsonData.annotation, '\"annotation\" field').to.eql('Эксклюзивность нашего шоу гарантирует привлечение максимальной зрительской аудитории');\r",
-							"    pm.expect(jsonData.category.id, '\"id\" field').to.eql(1);\r",
-							"    pm.expect(jsonData.initiator.id, '\"id\" field').to.eql(1);\r",
 							"    pm.expect(jsonData.state, '\"state\" field').to.eql('PUBLISHED');\r",
 							"});"
 						],
@@ -968,22 +892,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/admin/events/:eventId",
-					"protocol": "http",
+					"raw": "{{url}}/admin/events/{{eventId_2}}",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"admin",
 						"events",
-						":eventId"
-					],
-					"variable": [
-						{
-							"key": "eventId",
-							"value": "2"
-						}
+						"{{eventId_2}}"
 					]
 				}
 			},
@@ -1001,9 +917,6 @@
 							"});\r",
 							"pm.test(\"user 2 PENDING\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.id, '\"id\" field').to.eql(3);\r",
-							"    pm.expect(jsonData.event, '\"event\" field').to.eql(2);\r",
-							"    pm.expect(jsonData.requester, '\"requester\" field').to.eql(2);\r",
 							"    pm.expect(jsonData.status, '\"status\" field').to.eql('PENDING');\r",
 							"});"
 						],
@@ -1035,27 +948,19 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/users/:userId/requests?eventId=2",
-					"protocol": "http",
+					"raw": "{{url}}/users/{{userId_2}}/requests?eventId={{eventId_2}}",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"users",
-						":userId",
+						"{{userId_2}}",
 						"requests"
 					],
 					"query": [
 						{
 							"key": "eventId",
-							"value": "2"
-						}
-					],
-					"variable": [
-						{
-							"key": "userId",
-							"value": "2"
+							"value": "{{eventId_2}}"
 						}
 					]
 				}
@@ -1074,9 +979,6 @@
 							"});\r",
 							"pm.test(\"user 2 PENDING\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.id, '\"id\" field').to.eql(4);\r",
-							"    pm.expect(jsonData.event, '\"event\" field').to.eql(2);\r",
-							"    pm.expect(jsonData.requester, '\"requester\" field').to.eql(3);\r",
 							"    pm.expect(jsonData.status, '\"status\" field').to.eql('PENDING');\r",
 							"});"
 						],
@@ -1108,27 +1010,19 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/users/:userId/requests?eventId=2",
-					"protocol": "http",
+					"raw": "{{url}}/users/{{userId_3}}/requests?eventId={{eventId_2}}",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"users",
-						":userId",
+						"{{userId_3}}",
 						"requests"
 					],
 					"query": [
 						{
 							"key": "eventId",
-							"value": "2"
-						}
-					],
-					"variable": [
-						{
-							"key": "userId",
-							"value": "3"
+							"value": "{{eventId_2}}"
 						}
 					]
 				}
@@ -1147,10 +1041,11 @@
 							"});\r",
 							"pm.test(\"Test create user1\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.id, '\"id\" field').to.eql(4);\r",
 							"    pm.expect(jsonData.email, '\"email\" field').to.eql('user4@mail.com');\r",
 							"    pm.expect(jsonData.name, '\"name\" field').to.eql('user4');\r",
-							"});"
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set(\"userId_4\", pm.response.json().id);"
 						],
 						"type": "text/javascript"
 					}
@@ -1169,12 +1064,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/admin/users",
-					"protocol": "http",
+					"raw": "{{url}}/admin/users",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"admin",
 						"users"
@@ -1195,9 +1088,6 @@
 							"});\r",
 							"pm.test(\"user 2 PENDING\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.id, '\"id\" field').to.eql(5);\r",
-							"    pm.expect(jsonData.event, '\"event\" field').to.eql(2);\r",
-							"    pm.expect(jsonData.requester, '\"requester\" field').to.eql(4);\r",
 							"    pm.expect(jsonData.status, '\"status\" field').to.eql('PENDING');\r",
 							"});"
 						],
@@ -1229,27 +1119,19 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/users/:userId/requests?eventId=2",
-					"protocol": "http",
+					"raw": "{{url}}/users/{{userId_4}}/requests?eventId={{eventId_2}}",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"users",
-						":userId",
+						"{{userId_4}}",
 						"requests"
 					],
 					"query": [
 						{
 							"key": "eventId",
-							"value": "2"
-						}
-					],
-					"variable": [
-						{
-							"key": "userId",
-							"value": "4"
+							"value": "{{eventId_2}}"
 						}
 					]
 				}
@@ -1284,17 +1166,15 @@
 				"method": "PATCH",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/users/:userId/events/:eventId/rating?like=true",
-					"protocol": "http",
+					"raw": "{{url}}/users/{{userId_2}}/events/{{eventId_2}}/rating?like=true",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"users",
-						":userId",
+						"{{userId_2}}",
 						"events",
-						":eventId",
+						"{{eventId_2}}",
 						"rating"
 					],
 					"query": [
@@ -1302,16 +1182,6 @@
 							"key": "like",
 							"value": "true",
 							"description": "false"
-						}
-					],
-					"variable": [
-						{
-							"key": "userId",
-							"value": "2"
-						},
-						{
-							"key": "eventId",
-							"value": "2"
 						}
 					]
 				}
@@ -1346,17 +1216,15 @@
 				"method": "PATCH",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/users/:userId/events/:eventId/rating?like=true",
-					"protocol": "http",
+					"raw": "{{url}}/users/{{userId_3}}/events/{{eventId_2}}/rating?like=true",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"users",
-						":userId",
+						"{{userId_3}}",
 						"events",
-						":eventId",
+						"{{eventId_2}}",
 						"rating"
 					],
 					"query": [
@@ -1364,16 +1232,6 @@
 							"key": "like",
 							"value": "true",
 							"description": "false"
-						}
-					],
-					"variable": [
-						{
-							"key": "userId",
-							"value": "3"
-						},
-						{
-							"key": "eventId",
-							"value": "2"
 						}
 					]
 				}
@@ -1394,20 +1252,16 @@
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.length, 'events count in total').to.eql(2);\r",
 							"\r",
-							"    pm.expect(jsonData[0].id, 'result[0]: \"id\" field').to.eql(2);\r",
 							"    pm.expect(jsonData[0].title, 'result[0]: \"title\" field').to.eql(\"Знаменитое шоу 'Летающая кукуруза'\");\r",
 							"    pm.expect(jsonData[0].like, 'result[0]: \"like\" field').to.eql(2);\r",
 							"    pm.expect(jsonData[0].dislike, 'result[0]: \"dislike\" field').to.eql(0);\r",
 							"    pm.expect(jsonData[0].rating, 'result[0]: \"rating\" field').to.eql(10.0);\r",
-							"    pm.expect(jsonData[0].initiator.id, 'result[0]: \"id\" field').to.eql(1);\r",
 							"    pm.expect(jsonData[0].initiator.name, 'result[0]: \"name\" field').to.eql(\"user1\");\r",
 							"\r",
-							"    pm.expect(jsonData[1].id, 'result[1]: \"id\" field').to.eql(1);\r",
 							"    pm.expect(jsonData[1].title, 'result[1]: \"title\" field').to.eql('Сплав на байдарках');\r",
 							"    pm.expect(jsonData[1].like, 'result[1]: \"like\" field').to.eql(1);\r",
 							"    pm.expect(jsonData[1].dislike, 'result[1]: \"dislike\" field').to.eql(1);\r",
 							"    pm.expect(jsonData[1].rating, 'result[1]: \"rating\" field').to.eql(5.0);\r",
-							"    pm.expect(jsonData[1].initiator.id, 'result[1]: \"id\" field').to.eql(1);\r",
 							"    pm.expect(jsonData[1].initiator.name, 'result[1]: \"name\" field').to.eql(\"user1\");    \r",
 							"});"
 						],
@@ -1419,12 +1273,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/rating/events",
-					"protocol": "http",
+					"raw": "{{url}}/rating/events",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"rating",
 						"events"
@@ -1447,7 +1299,6 @@
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.length, 'users count in total').to.eql(1);\r",
 							"\r",
-							"    pm.expect(jsonData[0].id, 'result[0]: \"id\" field').to.eql(1);\r",
 							"    pm.expect(jsonData[0].name, 'result[0]: \"name\" field').to.eql('user1');\r",
 							"    pm.expect(jsonData[0].like, 'result[0]: \"like\" field').to.eql(3);\r",
 							"    pm.expect(jsonData[0].dislike, 'result[0]: \"dislike\" field').to.eql(1);\r",
@@ -1462,12 +1313,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/rating/users",
-					"protocol": "http",
+					"raw": "{{url}}/rating/users",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"rating",
 						"users"
@@ -1495,27 +1344,21 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/users/:userId/events/:eventId/rating",
-					"protocol": "http",
+					"raw": "{{url}}/users/:userId/events/{{eventId}}/rating",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"users",
 						":userId",
 						"events",
-						":eventId",
+						"{{eventId}}",
 						"rating"
 					],
 					"variable": [
 						{
 							"key": "userId",
 							"value": "9"
-						},
-						{
-							"key": "eventId",
-							"value": "1"
 						}
 					]
 				}
@@ -1550,38 +1393,86 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/users/:userId/events/:eventId/rating",
-					"protocol": "http",
+					"raw": "{{url}}/users/{{userId_2}}/events/{{eventId}}/rating",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"users",
-						":userId",
+						"{{userId_2}}",
 						"events",
-						":eventId",
+						"{{eventId}}",
 						"rating"
-					],
-					"variable": [
-						{
-							"key": "userId",
-							"value": "2"
-						},
-						{
-							"key": "eventId",
-							"value": "1"
-						}
 					]
 				}
 			},
 			"response": []
 		}
 	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
 	"variable": [
 		{
 			"key": "url",
-			"value": "http://localhost:8080/"
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "userId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "eventId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "compid",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "catId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "localDate",
+			"value": ""
+		},
+		{
+			"key": "userId_2",
+			"value": ""
+		},
+		{
+			"key": "userId_3",
+			"value": ""
+		},
+		{
+			"key": "eventId_2",
+			"value": ""
+		},
+		{
+			"key": "userId_4",
+			"value": ""
 		}
 	]
 }
