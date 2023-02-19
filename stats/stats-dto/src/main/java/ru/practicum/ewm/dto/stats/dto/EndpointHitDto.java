@@ -30,4 +30,8 @@ public class EndpointHitDto implements Serializable {
     @NotBlank(message = "can not be empty")
     private String timestamp;
 
+    public EndpointHitDto(String uri, String ip) {
+        this.uri = uri;
+        this.ip = ip;
+    }
 }

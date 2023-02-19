@@ -21,10 +21,10 @@ public class EndpointHit {
 
     private String app;
 
-    @Column(name = "uri", length = 20, nullable = false)
+    @Column(name = "uri", length = 100, nullable = false)
     private String uri;
 
-    @Column(name = "ip", length = 20, nullable = false)
+    @Column(name = "ip", length = 50, nullable = false)
     private String ip;
 
     @Column(name = "time_stamp", nullable = false)
