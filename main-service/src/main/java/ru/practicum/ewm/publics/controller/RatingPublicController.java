@@ -5,8 +5,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.practicum.ewm.dto.RatingEventDto;
-import ru.practicum.ewm.dto.RatingUserDto;
+import ru.practicum.ewm.dto.rating.RatingEventDto;
+import ru.practicum.ewm.dto.rating.RatingUserDto;
 import ru.practicum.ewm.publics.service.rating.RatingPublicService;
 
 import java.util.List;

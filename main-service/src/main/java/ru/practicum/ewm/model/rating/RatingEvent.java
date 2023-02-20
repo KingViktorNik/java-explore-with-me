@@ -14,7 +14,7 @@ public class RatingEvent {
     /** Описания события */
     private String title;
 
-    /** Количество лайков */
+    /** Количество лайков или дизлайков */
     private Long eventLike;
 
     /** id инициатора */

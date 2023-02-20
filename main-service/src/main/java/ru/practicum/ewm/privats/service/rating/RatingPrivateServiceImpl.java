@@ -37,7 +37,7 @@ public class RatingPrivateServiceImpl implements RatingPrivateService {
         Event event = eventRepository.findById(eventId)
                                   .orElseThrow(() -> new NotFoundException("Event with id=" + eventId + " was not found"));
 
-        // Событие должно быть в прошлом
+        // Оценить можно только завершенное событие, которое уже прошло
         if (event.getEventDate().isAfter(dateTime)) {
             throw new ConflictException("Event id=" + eventId + " has not yet taken place");
         }
@@ -47,24 +47,28 @@ public class RatingPrivateServiceImpl implements RatingPrivateService {
             throw new ConflictException("Event organizer id =" + userId + " cannot evaluate the event.");
         }
 
-        // Оценить событие может только его участник.
+        // Если событию не требуется модерация, выбирается соответствующий статус участника.
         RequestStatus status;
         if (event.getRequestModeration()) {
             status = CONFIRMED;
         } else {
             status = PENDING;
         }
+
+        // Является ли пользователь участником
         requestRepository.findByRequesterIdAndEventIdAndStatus(userId, eventId, status)
                          .orElseThrow(() -> new NotFoundException("Participation Request with id=" + userId + " was not found"));
 
+
+        // Проверка наличия оценки в базе, оценивал ли пользователь событие ранее.
         Optional<Rating> result = ratingRepository.findByUserIdAndEventId(userId, eventId);
 
-        Long id = null;
+        Long ratingId = null;
         if (result.isPresent()) {
-            id = result.get().getId();
+            ratingId = result.get().getId();
         }
 
-        Rating ratingEvent = new Rating(id, user, event, like);
+        Rating ratingEvent = new Rating(ratingId, user, event, like);
         log.info("addLike eventId:{} userId{}", eventId, userId);
 
         ratingRepository.save(ratingEvent);

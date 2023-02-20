@@ -1,6 +1,6 @@
 package ru.practicum.ewm.mapper.rating;
 
-import ru.practicum.ewm.dto.RatingUserDto;
+import ru.practicum.ewm.dto.rating.RatingUserDto;
 import ru.practicum.ewm.model.rating.RatingUser;
 
 import java.util.List;

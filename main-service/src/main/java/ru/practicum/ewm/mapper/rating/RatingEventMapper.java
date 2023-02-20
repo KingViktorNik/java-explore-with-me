@@ -1,8 +1,8 @@
 package ru.practicum.ewm.mapper.rating;
 
-import ru.practicum.ewm.dto.RatingEventDto;
+import ru.practicum.ewm.dto.rating.RatingEventDto;
 import ru.practicum.ewm.model.rating.RatingEvent;
-import ru.practicum.ewm.dto.RatingEventDto.Initiator;
+import ru.practicum.ewm.dto.rating.RatingEventDto.Initiator;
 
 import java.util.List;
 import java.util.stream.Collectors;

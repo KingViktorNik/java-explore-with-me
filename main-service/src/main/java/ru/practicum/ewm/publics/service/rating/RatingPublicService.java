@@ -1,7 +1,7 @@
 package ru.practicum.ewm.publics.service.rating;
 
-import ru.practicum.ewm.dto.RatingEventDto;
-import ru.practicum.ewm.dto.RatingUserDto;
+import ru.practicum.ewm.dto.rating.RatingEventDto;
+import ru.practicum.ewm.dto.rating.RatingUserDto;
 
 import java.util.List;
 
