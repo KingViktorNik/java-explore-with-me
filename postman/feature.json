@@ -1,0 +1,1478 @@
+{
+	"info": {
+		"_postman_id": "c7c5f0fd-08d1-4983-ba6e-c75593c6479a",
+		"name": "feature_rating_events",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25920788"
+	},
+	"item": [
+		{
+			"name": "getRatingEvents0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+							"});\r",
+							"pm.test(\"Test get rating events\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length, 'events count in total').to.eql(0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/rating/events",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"rating",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getRatingUsers0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+							"});\r",
+							"pm.test(\"Test get rating users\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length, 'users count in total').to.eql(0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/rating/users",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"rating",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addUser1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+							"});\r",
+							"pm.test(\"Test create user1\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.email, '\"email\" field').to.eql('user1@mail.com');\r",
+							"    pm.expect(jsonData.name, '\"name\" field').to.eql('user1');\r",
+							"});\r",
+							"pm.collectionVariables.set(\"userId\", pm.response.json().id);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"user1@mail.com\",\r\n    \"name\": \"user1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/admin/users",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addCategories1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+							"});\r",
+							"pm.test(\"Test create user1\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.name, '\"name\" field').to.eql('Природа');\r",
+							"});\r",
+							"pm.collectionVariables.set(\"catId\", pm.response.json().id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Природа\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/admin/categories",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addEvent1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+							"});\r",
+							"pm.test(\"Test create user1\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.title, '\"title\" field').to.eql(\"Сплав на байдарках\");\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set(\"eventId\", pm.response.json().id);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var moment = require('moment');\r",
+							"\r",
+							"var localDate = moment().add(2, 'h');\r",
+							"pm.collectionVariables.set('localDate', localDate.format('YYYY-MM-DD HH:mm:ss'));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"annotation\": \"Сплав на байдарках похож на полет.\",\r\n  \"category\": {{catId}},\r\n  \"description\": \"Сплав на байдарках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\r\n  \"eventDate\": \"{{localDate}}\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 0,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Сплав на байдарках\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/{{userId}}/events",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"{{userId}}",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addUser2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+							"});\r",
+							"pm.test(\"Test create user1\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.email, '\"email\" field').to.eql('user2@mail.com');\r",
+							"    pm.expect(jsonData.name, '\"name\" field').to.eql('user2');\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set(\"userId_2\", pm.response.json().id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"user2@mail.com\",\r\n    \"name\": \"user2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/admin/users",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addUser3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+							"});\r",
+							"pm.test(\"Test create user1\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.email, '\"email\" field').to.eql('user3@mail.com');\r",
+							"    pm.expect(jsonData.name, '\"name\" field').to.eql('user3');\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set(\"userId_3\", pm.response.json().id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"user3@mail.com\",\r\n    \"name\": \"user3\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/admin/users",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Event_publish_event",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+							"});\r",
+							"pm.test(\"publish event\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.annotation, '\"annotation\" field').to.eql('Сплав на байдарках похож на полет.');\r",
+							"    pm.expect(jsonData.state, '\"state\" field').to.eql('PUBLISHED');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var moment = require('moment');\r",
+							"\r",
+							"var localDate = moment().add(-1, 'm');;\r",
+							"pm.environment.set('localDate', localDate.format('YYYY-MM-DD HH:mm:ss'));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"stateAction\": \"PUBLISH_EVENT\",\r\n  \"eventDate\": \"{{localDate}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/admin/events/{{eventId}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"events",
+						"{{eventId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User2requests1event1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
+							"});\r",
+							"pm.test(\"user 2 PENDING\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status, '\"status\" field').to.eql('PENDING');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"setTimeout(function(){}, [100]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/users/{{userId_2}}/requests?eventId={{eventId}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"{{userId_2}}",
+						"requests"
+					],
+					"query": [
+						{
+							"key": "eventId",
+							"value": "{{eventId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User3requests1event1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
+							"});\r",
+							"pm.test(\"user 2 PENDING\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status, '\"status\" field').to.eql('PENDING');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/users/{{userId_3}}/requests?eventId={{eventId}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"{{userId_3}}",
+						"requests"
+					],
+					"query": [
+						{
+							"key": "eventId",
+							"value": "{{eventId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addlikeEvent1User2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/{{userId_2}}/events/{{eventId}}/rating?like=true",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"{{userId_2}}",
+						"events",
+						"{{eventId}}",
+						"rating"
+					],
+					"query": [
+						{
+							"key": "like",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addlikeError",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/:userId/events/:eventId/rating",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"events",
+						":eventId",
+						"rating"
+					],
+					"query": [
+						{
+							"key": "like",
+							"value": "true",
+							"description": "false",
+							"disabled": true
+						}
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "3"
+						},
+						{
+							"key": "eventId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addlikeEvent1User3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"setTimeout(function(){}, [100]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/{{userId_3}}/events/{{eventId}}/rating?like=false",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"{{userId_3}}",
+						"events",
+						"{{eventId}}",
+						"rating"
+					],
+					"query": [
+						{
+							"key": "like",
+							"value": "false",
+							"description": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getRatingEvents",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+							"});\r",
+							"pm.test(\"Test get rating events\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length, 'events count in total').to.eql(1);\r",
+							"\r",
+							"    pm.expect(jsonData[0].title, 'result[0]: \"title\" field').to.eql('Сплав на байдарках');\r",
+							"    pm.expect(jsonData[0].like, 'result[0]: \"like\" field').to.eql(1);\r",
+							"    pm.expect(jsonData[0].dislike, 'result[0]: \"dislike\" field').to.eql(1);\r",
+							"    pm.expect(jsonData[0].rating, 'result[0]: \"rating\" field').to.eql(5.0);\r",
+							"    pm.expect(jsonData[0].initiator.name, 'result[0]: \"name\" field').to.eql(\"user1\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/rating/events",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"rating",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getRatingUsers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+							"});\r",
+							"pm.test(\"Test get rating users\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length, 'users count in total').to.eql(1);\r",
+							"\r",
+							"    pm.expect(jsonData[0].name, 'result[0]: \"name\" field').to.eql('user1');\r",
+							"    pm.expect(jsonData[0].like, 'result[0]: \"like\" field').to.eql(1);\r",
+							"    pm.expect(jsonData[0].rating, 'result[0]: \"rating\" field').to.eql(5.0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/rating/users",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"rating",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addEvent2User1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+							"});\r",
+							"pm.test(\"Test create evetnt 2\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.title, '\"title\" field').to.eql(\"Знаменитое шоу 'Летающая кукуруза'\");\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set(\"eventId_2\", pm.response.json().id);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var moment = require('moment');\r",
+							"\r",
+							"var localDate = moment().add(2, 'h');\r",
+							"pm.environment.set('localDate', localDate.format('YYYY-MM-DD HH:mm:ss'));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"annotation\": \"Эксклюзивность нашего шоу гарантирует привлечение максимальной зрительской аудитории\",\r\n  \"category\": 1,\r\n  \"description\": \"Что получится, если соединить кукурузу и полёт? Создатели \\\"Шоу летающей кукурузы\\\" испытали эту идею на практике и воплотили в жизнь инновационный проект, предлагающий свежий взгляд на развлечения...\",\r\n  \"eventDate\": \"{{localDate}}\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 0,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Знаменитое шоу 'Летающая кукуруза'\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/{{userId}}/events",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"{{userId}}",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Event2_publish_event",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+							"});\r",
+							"pm.test(\"publish event\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.annotation, '\"annotation\" field').to.eql('Эксклюзивность нашего шоу гарантирует привлечение максимальной зрительской аудитории');\r",
+							"    pm.expect(jsonData.state, '\"state\" field').to.eql('PUBLISHED');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"setTimeout(function(){}, [100]);\r",
+							"var moment = require('moment');\r",
+							"\r",
+							"var localDate = moment().add(-1, 'm');;\r",
+							"pm.environment.set('localDate', localDate.format('YYYY-MM-DD HH:mm:ss'));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"stateAction\": \"PUBLISH_EVENT\",\r\n  \"eventDate\": \"{{localDate}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/admin/events/{{eventId_2}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"events",
+						"{{eventId_2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User2requests1event2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
+							"});\r",
+							"pm.test(\"user 2 PENDING\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status, '\"status\" field').to.eql('PENDING');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/users/{{userId_2}}/requests?eventId={{eventId_2}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"{{userId_2}}",
+						"requests"
+					],
+					"query": [
+						{
+							"key": "eventId",
+							"value": "{{eventId_2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User3requests1event3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
+							"});\r",
+							"pm.test(\"user 2 PENDING\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status, '\"status\" field').to.eql('PENDING');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/users/{{userId_3}}/requests?eventId={{eventId_2}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"{{userId_3}}",
+						"requests"
+					],
+					"query": [
+						{
+							"key": "eventId",
+							"value": "{{eventId_2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addUser4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+							"});\r",
+							"pm.test(\"Test create user1\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.email, '\"email\" field').to.eql('user4@mail.com');\r",
+							"    pm.expect(jsonData.name, '\"name\" field').to.eql('user4');\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set(\"userId_4\", pm.response.json().id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"user4@mail.com\",\r\n    \"name\": \"user4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/admin/users",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User4requests2event2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
+							"});\r",
+							"pm.test(\"user 2 PENDING\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status, '\"status\" field').to.eql('PENDING');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/users/{{userId_4}}/requests?eventId={{eventId_2}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"{{userId_4}}",
+						"requests"
+					],
+					"query": [
+						{
+							"key": "eventId",
+							"value": "{{eventId_2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addlikeEvent2User2true",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"setTimeout(function(){}, [100]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/{{userId_2}}/events/{{eventId_2}}/rating?like=true",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"{{userId_2}}",
+						"events",
+						"{{eventId_2}}",
+						"rating"
+					],
+					"query": [
+						{
+							"key": "like",
+							"value": "true",
+							"description": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addlikeEvent2User3true",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"setTimeout(function(){}, [100]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/{{userId_3}}/events/{{eventId_2}}/rating?like=true",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"{{userId_3}}",
+						"events",
+						"{{eventId_2}}",
+						"rating"
+					],
+					"query": [
+						{
+							"key": "like",
+							"value": "true",
+							"description": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getRatingEvents2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+							"});\r",
+							"pm.test(\"Test get rating events\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length, 'events count in total').to.eql(2);\r",
+							"\r",
+							"    pm.expect(jsonData[0].title, 'result[0]: \"title\" field').to.eql(\"Знаменитое шоу 'Летающая кукуруза'\");\r",
+							"    pm.expect(jsonData[0].like, 'result[0]: \"like\" field').to.eql(2);\r",
+							"    pm.expect(jsonData[0].dislike, 'result[0]: \"dislike\" field').to.eql(0);\r",
+							"    pm.expect(jsonData[0].rating, 'result[0]: \"rating\" field').to.eql(10.0);\r",
+							"    pm.expect(jsonData[0].initiator.name, 'result[0]: \"name\" field').to.eql(\"user1\");\r",
+							"\r",
+							"    pm.expect(jsonData[1].title, 'result[1]: \"title\" field').to.eql('Сплав на байдарках');\r",
+							"    pm.expect(jsonData[1].like, 'result[1]: \"like\" field').to.eql(1);\r",
+							"    pm.expect(jsonData[1].dislike, 'result[1]: \"dislike\" field').to.eql(1);\r",
+							"    pm.expect(jsonData[1].rating, 'result[1]: \"rating\" field').to.eql(5.0);\r",
+							"    pm.expect(jsonData[1].initiator.name, 'result[1]: \"name\" field').to.eql(\"user1\");    \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/rating/events",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"rating",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getRatingUsers2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+							"});\r",
+							"pm.test(\"Test get rating users\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length, 'users count in total').to.eql(1);\r",
+							"\r",
+							"    pm.expect(jsonData[0].name, 'result[0]: \"name\" field').to.eql('user1');\r",
+							"    pm.expect(jsonData[0].like, 'result[0]: \"like\" field').to.eql(3);\r",
+							"    pm.expect(jsonData[0].dislike, 'result[0]: \"dislike\" field').to.eql(1);\r",
+							"    pm.expect(jsonData[0].rating, 'result[0]: \"rating\" field').to.eql(7.5);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/rating/users",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"rating",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deletelikeError",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([404]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/:userId/events/{{eventId}}/rating",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"events",
+						"{{eventId}}",
+						"rating"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "9"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deletelikeUser2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([204]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"setTimeout(function(){}, [100]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/{{userId_2}}/events/{{eventId}}/rating",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"{{userId_2}}",
+						"events",
+						"{{eventId}}",
+						"rating"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "userId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "eventId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "compid",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "catId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "localDate",
+			"value": ""
+		},
+		{
+			"key": "userId_2",
+			"value": ""
+		},
+		{
+			"key": "userId_3",
+			"value": ""
+		},
+		{
+			"key": "eventId_2",
+			"value": ""
+		},
+		{
+			"key": "userId_4",
+			"value": ""
+		}
+	]
+}

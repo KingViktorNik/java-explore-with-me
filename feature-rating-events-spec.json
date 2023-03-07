@@ -1,0 +1,408 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Rating events API",
+    "description": "Рейтинг событий",
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Explore With Me"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Private",
+      "description": "Оценка мероприятий"
+    },
+    {
+      "name": "Public",
+      "description": "Рейтинги событий"
+    }
+  ],
+  "paths": {
+    "/user/{userId}/event/{eventId}/rating": {
+      "patch": {
+        "description": "оценить событие можно только по его завершению. Оценить событие может только его участник. Организатор события не может оценить событие.",
+        "tags": [
+          "Private"
+        ],
+        "operationId": "updateLike",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "Идентификатор пользователя",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "eventId",
+            "in": "path",
+            "required": true,
+            "description": "Идентификатор события",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "like",
+            "in": "query",
+            "required": true,
+            "description": "Оценка мероприятия",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Запрос составлен некорректно",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "reason": {
+                      "type": "string",
+                      "example": "contentMediaType"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Ошибка ввода данных"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "example": "2022-09-07T09:10:50.000Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Событие не найдено или недоступно",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "NOT_FOUND"
+                    },
+                    "reason": {
+                      "type": "string",
+                      "example": "The required object was not found."
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Event with id=321 was not found"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "example": "2022-09-07T09:10:50.000Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Событие должно быть в прошлом. Организатор события не может оценить событие. Оценить событие может только его участник.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "CONFLICT"
+                    },
+                    "reason": {
+                      "type": "string",
+                      "example": "The event must be in the past found."
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Event id=1 has not yet taken place"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "example": "2022-09-07T09:10:50.000Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{userId}/event/{eventId }/rating": {
+      "delete": {
+        "description": "Удаление оценки события происходит не зависимо от статуса оценки like/dislike",
+        "tags": [
+          "Private"
+        ],
+        "operationId": "deleteLike",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "Идентификатор пользователя",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "eventId",
+            "in": "path",
+            "required": true,
+            "description": "Идентификатор события",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Запрос составлен некорректно",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "reason": {
+                      "type": "string",
+                      "example": "contentMediaType"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Ошибка ввода данных"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "example": "2022-09-07T09:10:50.000Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Событие не найдено или недоступно",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "NOT_FOUND"
+                    },
+                    "reason": {
+                      "type": "string",
+                      "example": "The required object was not found."
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Event with id=321 was not found"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "example": "2022-09-07T09:10:50.000Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rating/events": {
+      "get": {
+        "description": "Рейтинг событий",
+        "tags": [
+          "Public"
+        ],
+        "operationId": "getRatingEvents",
+        "responses": {
+          "200": {
+            "description": "В случае если нечего не найдено, нужно вернуть пустой список",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListRatingEventDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rating/users": {
+      "get": {
+        "description": "Рейтинг пользователей (организаторов мероприятий)",
+        "tags": [
+          "Public"
+        ],
+        "operationId": "getRatingInitiator",
+        "responses": {
+          "200": {
+            "description": "В случае если нечего не найдено, нужно вернуть пустой список",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListRatingUserDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RatingEventDto": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "rating"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1,
+            "description": "id события"
+          },
+          "title": {
+            "type": "string",
+            "example": "Сплав на байдарках похож на полет.",
+            "description": "Краткое описание события"
+          },
+          "like": {
+            "type": "integer",
+            "format": "int32",
+            "example": 2,
+            "description": "положительные отзывы"
+          },
+          "dislike": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1,
+            "description": "отрицательные отзывы"
+          },
+          "rating": {
+            "type": "number",
+            "format": "double",
+            "example": 6.67,
+            "description": "Рейтинг строиться по 10 бальной шкале"
+          },
+          "initiator": {
+            "type": "object",
+            "required": [
+              "id",
+              "name"
+            ],
+            "properties": {
+              "id": {
+                "type": "integer",
+                "example": 34,
+                "description": "id инициатора"
+              },
+              "name": {
+                "type": "string",
+                "example": "Иван",
+                "description": "Имя инициатора"
+              }
+            }
+          }
+        }
+      },
+      "RatingUserDto": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "like",
+          "dislike",
+          "rating"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1,
+            "description": "id пользователя"
+          },
+          "name": {
+            "type": "string",
+            "example": "Иван",
+            "description": "Имя пользователя"
+          },
+          "like": {
+            "type": "integer",
+            "format": "int32",
+            "example": 6,
+            "description": "положительные отзывы"
+          },
+          "dislike": {
+            "type": "integer",
+            "format": "int32",
+            "example": 4,
+            "description": "отрицательные отзывы"
+          },
+          "rating": {
+            "type": "number",
+            "format": "double",
+            "example": 6,
+            "description": "Рейтинг строиться по 10 бальной шкале"
+          }
+        }
+      },
+      "ListRatingUserDto": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/RatingUserDto"
+        }
+      },
+      "ListRatingEventDto": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/RatingEventDto"
+        }
+      }
+    }
+  }
+}
